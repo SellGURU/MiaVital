@@ -6,12 +6,23 @@ interface AddFilterProps  {
     setFilters:(filter:Array<any>) => void
 }
 
-const AddFilter:React.FC<AddFilterProps> = ({}) => {
+const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const [openFilter,setOpenFilter] = useState(false)
-    const [categoryfilter,setCategoryFilter] =useState('')
-    const [lavelFilter,setLevelFilter] = useState('')
+    const [categoryfilter,setCategoryFilter] =useState('Risk Level')
+    const [lavelFilter,setLevelFilter] = useState('Low')
 
     const addFilter = () => {
+        const myfilters = filters
+        if(myfilters.map((val) => val.item).includes(categoryfilter)){
+            myfilters[myfilters.findIndex((item) => item.item == categoryfilter)].value = lavelFilter 
+            setFilters([...myfilters])
+        }else{
+            setFilters([...filters,{
+                item:categoryfilter,
+                value:lavelFilter           
+            }])
+
+        }
         // let filters = 
     }
     return (
@@ -40,7 +51,7 @@ const AddFilter:React.FC<AddFilterProps> = ({}) => {
                     </FormSelect>                    
                    </div>                   
                     <div className="flex gap-1 items-center">
-                        <img src="./fi_check.svg" alt="" />
+                        <img onClick={() => {addFilter()}} src="./fi_check.svg" alt="" />
                         <img className="cursor-pointer" onClick={() => {setOpenFilter(false)}} src="./fi_x.svg" alt="" />
                     </div>
                 </div>
