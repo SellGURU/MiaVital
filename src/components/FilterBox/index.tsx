@@ -1,8 +1,9 @@
 import { useState } from "react"
 import FilterItem from "./FilterItem"
+import AddFilter from "./AddFilter"
 
 const FilterBox = () => {
-    const [filters] = useState([
+    const [filters,setFilters] = useState([
         {
             item:'Risk Level',
             value:'High'
@@ -22,16 +23,13 @@ const FilterBox = () => {
     ])
     return (
         <>
-            <div className="w-full flex gap-4 items-center justify-start">
+            <div className="w-full flex flex-wrap gap-4 items-center justify-start">
                 {filters.map((item) => {
                     return (
                         <FilterItem item={item}></FilterItem>
                     )
                 })}
-                <div className="bg-white cursor-pointer border w-auto flex items-center px-3 py-2 rounded-[10px] border-[#E2E8F0]">
-                    <img src="./filter.svg" alt="" />
-                    <div className="text-xs text-[#475569] font-normal ml-1 mr-1">Add Filter</div>
-                </div>                
+                <AddFilter filters={filters} setFilters={setFilters}></AddFilter>       
             </div>  
         </>
     )

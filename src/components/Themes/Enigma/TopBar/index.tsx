@@ -34,7 +34,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
           <Link
             to="/"
             className={clsx([
-              "-intro-x hidden md:flex",
+              "-intro-x  hidden md:flex md:items-center",
               props.layout == "side-menu" && "xl:w-[180px]",
               props.layout == "simple-menu" && "xl:w-auto",
               props.layout == "top-menu" && "w-auto",
@@ -42,7 +42,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
           >
             <img
               alt="Enigma Tailwind HTML Admin Template"
-              className="w-6"
+              className="w-12"
               src={logoUrl}
             />
             <span
@@ -53,7 +53,11 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
               ])}
             >
               {" "}
-              Enigma{" "}
+              <div className="text-xl">
+                
+                <span style={{color:'#48c3b5'}}>Mia</span>
+                Vital{" "}
+              </div> 
             </span>
           </Link>
           {/* END: Logo */}
@@ -66,7 +70,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
               props.layout == "top-menu" && "md:pl-10",
             ])}
           >
-            <Breadcrumb.Link to="/">Application</Breadcrumb.Link>
+            <Breadcrumb.Link to="/">MiaVital</Breadcrumb.Link>
             <Breadcrumb.Link to="/" active={true}>
               Dashboard
             </Breadcrumb.Link>
