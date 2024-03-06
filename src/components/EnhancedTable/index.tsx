@@ -358,14 +358,7 @@ export default function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
-  );
+  const visibleRows =rows
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -380,20 +373,21 @@ export default function EnhancedTable() {
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
-              orderBy={orderBy}
+              orderBy={orderBy as string}
+              title=''
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected( Number(row.id));
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, Number(row.id))}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
