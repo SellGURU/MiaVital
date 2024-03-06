@@ -70,7 +70,7 @@ import Slider from "../pages/Slider";
 import ImageZoom from "../pages/ImageZoom";
 
 import Layout from "../themes";
-import { Dashbord } from "@/pages/CustomPages";
+import { Dashbord, DashbordGoogleMap } from "@/pages/CustomPages";
 
 function Router() {
   const routes = [
@@ -84,7 +84,7 @@ function Router() {
         },
         {
           path: "dashboard-overview-2",
-          element: <DashboardOverview2 />,
+          element: <DashbordGoogleMap />,
         },
         {
           path: "dashboard-overview-3",
