@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { TinySliderElement } from "@/components/Base/TinySlider";
 import MapBox from "@/components/MapBox";
 import FilterBox from "@/components/FilterBox";
+import EnhancedTable from "@/components/EnhancedTable";
 
 
 function Main() {
@@ -24,6 +25,9 @@ function Main() {
         </div>
         <div className="w-full flex justify-center">
             <MapBox></MapBox>
+        </div>
+        <div className="w-full flex flex-col justify-center mt-[430px]">
+            <EnhancedTable></EnhancedTable>
         </div>
     </div>
   );
