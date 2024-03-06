@@ -36,7 +36,7 @@ function Main() {
 
   return (
     <div>
-      <ThemeSwitcher />
+      {/* <ThemeSwitcher /> */}
       <Component />
     </div>
   );
