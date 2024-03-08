@@ -20,6 +20,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { LatLng } from 'leaflet';
 
 
 
@@ -34,6 +35,8 @@ interface Data {
     temperature: number;
     respirationRate: number ;
     spo2: number;
+    latitude:number;
+    longitude:number
 }
 
 function createData(
@@ -46,7 +49,9 @@ function createData(
     bloodPressure: number,
     temperature: number,
     respirationRate: number ,
-    spo2: number
+    spo2: number,
+    latitude:number,
+    longitude:number
 ): Data {
   return {
     id,
@@ -58,20 +63,23 @@ function createData(
     bloodPressure,
     temperature,
     respirationRate,
-    spo2
+    spo2,
+    latitude,
+    longitude
   };
 }
 
-const rows = [
-  createData(1, 'Jane Cooper', 'COPD', 'High','High', 54 , 113.62 , 36.9 , 17 , 88),
-  createData(2, 'Esther Howard', 'CHF', 'High','High', 51 , 95.75 , 36.9 , 13 , 96),
-  createData(3, 'Esther Howard', 'Diabetes', 'High','High', 52 , 117.74 , 36.6 , 15 , 96),
-  createData(4, 'Cameron Wiliamson', 'Chronic Pain', 'Miderate','Miderate', 42 , 119.62 , 37.8 , 12 , 100),
-  createData(5, 'Brookiyn Simmons', 'CHF', 'High','High', 49 , 117.66 , 37 , 13 , 99),
-  createData(6, 'Leslie Alexander', 'COPD', 'High','High', 65 , 116.72 , 38 , 14 , 98),
-  createData(7, 'Guy Hawkins', 'Chronic Pain', 'Miderate','Miderate', 65 , 108.64 , 37.9 , 17 , 100),
-  createData(8, 'Robert Fox', 'CHF', 'High','High', 59 , 108.71 , 38.2 , 13 , 98),
-];
+// const rows = [
+//   createData(1, 'Jane Cooper', 'COPD', 'High','High', 54 , 113.62 , 36.9 , 17 , 88,12.97194,77.59369),
+//   createData(1, 'Jane Cooper', 'COPD', 'High','High', 54 , 113.62 , 36.9 , 17 ,88 ,12.951531,77.59702),
+//   // createData(2, 'Esther Howard', 'CHF', 'High','High', 51 , 95.75 , 36.9 , 13 , 96),
+//   // createData(3, 'Esther Howard', 'Diabetes', 'High','High', 52 , 117.74 , 36.6 , 15 , 96),
+//   // createData(4, 'Cameron Wiliamson', 'Chronic Pain', 'Miderate','Miderate', 42 , 119.62 , 37.8 , 12 , 100),
+//   // createData(5, 'Brookiyn Simmons', 'CHF', 'High','High', 49 , 117.66 , 37 , 13 , 99),
+//   // createData(6, 'Leslie Alexander', 'COPD', 'High','High', 65 , 116.72 , 38 , 14 , 98),
+//   // createData(7, 'Guy Hawkins', 'Chronic Pain', 'Miderate','Miderate', 65 , 108.64 , 37.9 , 17 , 100),
+//   // createData(8, 'Robert Fox', 'CHF', 'High','High', 59 , 108.71 , 38.2 , 13 , 98),
+// ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -294,14 +302,25 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     </Toolbar>
   );
 }
-export default function EnhancedTable() {
+interface boundsFilter {
+  northE:LatLng
+  southW:LatLng
+}
+
+interface EnhancedTable {
+  applyFilter:() => Array<Data>
+}
+export default function EnhancedTable(props:EnhancedTable) {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>();
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [rows,setRows] = React.useState(props.applyFilter())
+  React.useEffect(() => {
+    setRows(props.applyFilter())
+  })
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data,

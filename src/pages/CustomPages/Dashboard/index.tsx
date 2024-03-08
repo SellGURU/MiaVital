@@ -5,7 +5,7 @@ import { TinySliderElement } from "@/components/Base/TinySlider";
 import MapBox from "@/components/MapBox";
 import FilterBox from "@/components/FilterBox";
 import EnhancedTable from "@/components/EnhancedTable";
-
+import location from "@/assets/json/location.json";
 
 function Main() {
   const [salesReportFilter, setSalesReportFilter] = useState<string>();
@@ -16,7 +16,9 @@ function Main() {
   const nextImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("next");
   };
-
+  const filterdItems =() => { 
+      return location
+  }
   return (
     <div className="w-full">
         <div className="my-6 w-full">
@@ -27,7 +29,7 @@ function Main() {
             <MapBox></MapBox>
         </div>
         <div className="w-full flex flex-col justify-center mt-[430px]">
-            <EnhancedTable></EnhancedTable>
+            <EnhancedTable applyFilter={filterdItems}></EnhancedTable>
         </div>
     </div>
   );

@@ -2,20 +2,43 @@ import "@/assets/css/vendors/leaflet.css";
 import LeafletMapLoader, { Init } from "@/components/Base/LeafletMapLoader";
 import { getColor } from "@/utils/colors";
 import { selectDarkMode } from "@/stores/darkModeSlice";
-import { useAppSelector } from "@/stores/hooks";
 import location from "@/assets/json/location.json";
 import { selectColorScheme } from "@/stores/colorSchemeSlice";
+import React, { useEffect, useReducer, useRef, useState } from "react";
+import { LatLng } from "leaflet";
+import { useAppSelector } from "@/stores/hooks";
 
-type MainProps = React.ComponentPropsWithoutRef<"div">;
+interface boundsFilter {
+  northE:LatLng
+  southW:LatLng
+}
+type boundsFiltertype = {
+  boundsFilter:React.MutableRefObject<boundsFilter>
+  applyFilter:() =>void
+}
+
+type MainProps = React.ComponentPropsWithoutRef<"div"> & boundsFiltertype;
+
+
 
 function Main(props: MainProps) {
   const darkMode = useAppSelector(selectDarkMode);
   const colorScheme = useAppSelector(selectColorScheme);
+  // const boundsFilter:boundsFilter = {
+  //   northE:new LatLng(17,12),
+  //   southW: new LatLng(15,16)
+  // }
+
+  // const boundsFilter = useRef<boundsFilter>({
+  //     northE:new LatLng(17,12),
+  //     southW: new LatLng(15,16)    
+  // })
+  // changeBunds()
   const init: Init = async (initializeMap) => {
     const mapInstance = await initializeMap({
       config: {
-        center: [-6.2425342, 106.8626478],
-        zoom: 9,
+        center: [12.97194, 77.59369],
+        zoom: 13,
       },
     });
 
@@ -94,8 +117,8 @@ function Main(props: MainProps) {
       location.map(function (markerElem) {
         const marker = leaflet.marker(
           {
-            lat: parseFloat(markerElem.latitude),
-            lng: parseFloat(markerElem.longitude),
+            lat: markerElem.latitude,
+            lng: markerElem.longitude,
           },
           {
             title: markerElem.name,
@@ -107,6 +130,28 @@ function Main(props: MainProps) {
         );
         markers.addLayer(marker);
       });
+      map.addEventListener('mouseup',(e) => {
+        // setBoundsFilter(map.getBounds())
+        // setBoundsFilter({
+        //   northE:map.getBounds().getNorthEast(),
+        //   southW:map.getBounds().getSouthWest()
+        // })
+        props.boundsFilter.current.northE = map.getBounds().getNorthEast()
+        props.boundsFilter.current.southW = map.getBounds().getSouthWest()
+        // render()
+        props.applyFilter()
+        // checklocations()
+      })
+      map.addEventListener("zoom",() => {
+        props.boundsFilter.current.northE = map.getBounds().getNorthEast()
+        props.boundsFilter.current.southW = map.getBounds().getSouthWest()
+        // render()
+        props.applyFilter()        
+      })
+      // setBoundsFilter({
+      //   northE:map.getBounds().getNorthEast(),
+      //   southW:map.getBounds().getSouthWest()        
+      // })
     }
   };
 

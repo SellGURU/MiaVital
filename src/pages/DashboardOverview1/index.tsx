@@ -351,7 +351,7 @@ function Main() {
                 250 Official stores in 21 countries, click the marker to see
                 location details.
               </div>
-              <LeafletMap className="h-[310px] mt-5 rounded-md bg-slate-200" />
+              {/* <LeafletMap className="h-[310px] mt-5 rounded-md bg-slate-200" /> */}
             </div>
           </div>
           {/* END: Official Store */}
