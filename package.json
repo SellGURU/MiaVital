@@ -46,6 +46,7 @@
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.1",
     "react-transition-group": "^4.4.5",
+    "recharts": "^2.12.2",
     "simplebar": "^6.2.5",
     "styled-components": "^6.1.8",
     "tabulator-tables": "^5.5.2",
