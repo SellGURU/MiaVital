@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-
-
 interface DataItem {
   name: string;
   Suspected: number;
@@ -115,27 +113,25 @@ interface filterProps {
 
 const TrendsChart: React.FC = () => {  
   return(
-    // <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={1000}
-          height={350}
-          data={data}
-          margin={{
-            top: 40,
-            right: 0,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name"  angle={0} />
-          <YAxis strokeWidth={0} axisLine={false} />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="Risk" stroke="#FF3E5D" activeDot={{ r: 8 }} strokeWidth={2}/>
-          <Line type="monotone" dataKey="Suspected" stroke="#B1B1B9" strokeDasharray="3 3" strokeWidth={2} />
-        </LineChart>
-    //   </ResponsiveContainer>
+    <ResponsiveContainer width="100%" height={350}>
+      <LineChart
+        data={data}
+        margin={{
+          top: 40,
+          right: 50,
+          left: 50,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" angle={0} />
+        <YAxis strokeWidth={0} axisLine={false} />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="Risk" stroke="#FF3E5D" activeDot={{ r: 8 }} strokeWidth={2}/>
+        <Line type="monotone" dataKey="Suspected" stroke="#B1B1B9" strokeDasharray="3 3" strokeWidth={2} />
+      </LineChart>
+    </ResponsiveContainer>
 
   )
 }
