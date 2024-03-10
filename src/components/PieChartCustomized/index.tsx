@@ -9,7 +9,6 @@ interface DataItem {
 }
 
 const data: DataItem[] = [
-  
   { name: 'Group A', value: 13 },
   { name: 'Group B', value: 12 },
   { name: 'Group C', value: 62 },
@@ -45,46 +44,7 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-// interface filterProps {
-//   item:string
-//   value:string
-// }
-// const resolveFilterRate=(FilterItem:filterProps,item:any)=>{
-//   switch(FilterItem.item){
-//     case 'SPO2' :
-//       if(Number(item[FilterItem.item]) >= 90) {
-//         return 'yellow'
-//       }
-//       if(Number(item[FilterItem.item]) > 70 && Number(item[FilterItem.item]) < 90) {
-//         return 'purple'
-//       }
-//       if(Number(item[FilterItem.item]) > 50 && Number(item[FilterItem.item]) <= 70) {
-//         return 'red'
-//       }
-//       return 'green'
 
-//     case 'Gender' :
-//       if(item[FilterItem.item] = "Male") {
-//         return 'blue'
-//       }
-//       if(item[FilterItem.item] = "Female") {
-//         return 'red'
-//       }
-//       return 'yellow'
-
-//     case 'Age' :
-//       if(Number(item[FilterItem.item]) >= 75) {
-//         return 'yellow'
-//       }
-//       if(Number(item[FilterItem.item]) > 35 && Number(item[FilterItem.item]) < 75) {
-//         return 'red'
-//       }
-//       if(Number(item[FilterItem.item]) > 18 && Number(item[FilterItem.item]) <= 35) {
-//         return 'green'
-//       }
-//       return 'purple'
-//   }
-// } 
 interface PieChartCustomized {
   filterdData :() => Array<any>
 }

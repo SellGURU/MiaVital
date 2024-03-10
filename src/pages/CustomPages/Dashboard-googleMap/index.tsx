@@ -28,12 +28,34 @@ function Main() {
   };
   const resolveFilterRate = (filterItem:filterProps,item:any) => {
     switch(filterItem.item) {
-      case 'spo2':
-        if(Number(item[filterItem.item]) >= 95) {
+      case 'age':
+        if(Number(item[filterItem.item]) >= 75) {
           return 'High'
         }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
+        if(Number(item[filterItem.item]) >= 35 && Number(item[filterItem.item]) < 75){
           return 'Midrate'
+        }
+        if(Number(item[filterItem.item]) >= 18 && Number(item[filterItem.item]) < 35){
+          return 'Normal'
+        }
+        return 'Low'
+      case 'gender':
+        if(item[filterItem.item] === 'Female') {
+          return 'High'
+        }
+        if(item[filterItem.item] === 'Male'){
+          return 'Midrate'
+        }
+        return 'Low'
+      case 'spo2':
+        if(Number(item[filterItem.item]) >= 90) {
+          return 'High'
+        }
+        if(Number(item[filterItem.item]) >= 70 && Number(item[filterItem.item]) < 90){
+          return 'Midrate'
+        }
+        if(Number(item[filterItem.item]) >= 50 && Number(item[filterItem.item]) < 70){
+          return 'Normal'
         }
         return 'Low'
       case 'respirationRate':
@@ -118,8 +140,7 @@ function Main() {
   return (
     <div className="w-full">
         <div className="my-6 w-full">
-            <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
-
+          <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
         </div>
         <div className="w-full flex justify-center">
           <div className="p-5 w-full mt-12 intro-y box sm:mt-5">

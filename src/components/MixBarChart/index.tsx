@@ -66,27 +66,7 @@ interface filterProps {
 }
 
 
-const MixBarChart: React.FC = () => { 
-  // const resolveFilterRate=(FilterItem:filterProps,item:any)=>{
-  //   switch(FilterItem.item){
-  //     case 'spo2' :
-  //       if(Number(item[FilterItem.item]) >= 95) {
-  //         return 'High'
-  //       }
-  //       if(Number(item[FilterItem.item]) >= 90 && Number(item[FilterItem.item]) < 95) {
-  //         return 'Midrate'
-  //       }
-  //       return 'Low'
-  //     case 'respirationRate' :
-  //       if(Number(item[FilterItem.item]) >= 20) {
-  //         return 'High'
-  //       }
-  //       if(Number(item[FilterItem.item]) >= 12 && Number(item[FilterItem.item]) < 20) {
-  //         return 'Midrate'
-  //       }
-  //       return 'Low'
-  //   }
-  // }  
+const MixBarChart: React.FC = () => {  
   return(
     <BarChart
       layout="vertical"

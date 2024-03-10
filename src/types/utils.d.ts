@@ -37,6 +37,6 @@ type DotNestedKeys<T> = (
 
 
 type filterProps = {
-    item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2'
+    item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2' | 'gender' | 'age'
     value:string
 }
