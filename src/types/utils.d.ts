@@ -40,3 +40,33 @@ type filterProps = {
     item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2' | 'gender' | 'age'
     value:string
 }
+// "CityName":"Basavanagudi","HeartRate":54,"BloodPressure":"113/62","Temperature":36.9,"RespirationRate":17,"SPO2":88
+type genderType = {
+  Male:number,
+  Female:number,
+  Other:number
+}
+// "<= 18":300,"18-35":8000,"35-75":9000,">= 75":840
+type ageType = {
+  "<= 18":number,
+  "18-35":number,
+  "35-75":number,
+  ">= 75":number
+}
+
+type CityData = {
+  id:string,
+  CityName:string,
+  HeartRate:number,
+  BloodPressure:string,
+  Temperature:number,
+  RespirationRate:number,
+  SPO2:number,
+  latitude:number,
+  longitude:number,
+  gender:genderType
+  AgeGroup:ageType
+}
+
+// "gender":{"Male":600,"Female":520,"Other":30}
+// "latitude":12.9716,"longitude":77.5946

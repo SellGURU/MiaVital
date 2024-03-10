@@ -7,10 +7,12 @@ import EnhancedTable from "@/components/EnhancedTable";
 import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
+import citydata from "@/assets/json/city.json"
 import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
+import Table from "@/components/Table";
 
 function Main() {
   const mapRef = createRef<LeafletElement>();
@@ -28,34 +30,12 @@ function Main() {
   };
   const resolveFilterRate = (filterItem:filterProps,item:any) => {
     switch(filterItem.item) {
-      case 'age':
-        if(Number(item[filterItem.item]) >= 75) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 35 && Number(item[filterItem.item]) < 75){
-          return 'Midrate'
-        }
-        if(Number(item[filterItem.item]) >= 18 && Number(item[filterItem.item]) < 35){
-          return 'Normal'
-        }
-        return 'Low'
-      case 'gender':
-        if(item[filterItem.item] === 'Female') {
-          return 'High'
-        }
-        if(item[filterItem.item] === 'Male'){
-          return 'Midrate'
-        }
-        return 'Low'
       case 'spo2':
-        if(Number(item[filterItem.item]) >= 90) {
+        if(Number(item[filterItem.item]) >= 95) {
           return 'High'
         }
-        if(Number(item[filterItem.item]) >= 70 && Number(item[filterItem.item]) < 90){
+        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
           return 'Midrate'
-        }
-        if(Number(item[filterItem.item]) >= 50 && Number(item[filterItem.item]) < 70){
-          return 'Normal'
         }
         return 'Low'
       case 'respirationRate':
@@ -103,8 +83,34 @@ function Main() {
         return location
       }
   }
+  const filterdItems2 =() => {
+      const filter1 = citydata.filter((item) => {
+        if(filters.length == 0) {
+          return item
+        }
+        let maps = filters.filter(fil => {
+          if(resolveFilterRate(fil,item) == fil.value){
+            return fil
+          }
+        })
+        if(maps.length == filters.length){
+          return item
+        }
+      })
+      if(boundsFilter){
+        const filterd = filter1.filter((ite) => {
+          return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
+                  Number(ite.latitude) < boundsFilter.current.northE.lat &&
+                  Number(ite.longitude) < boundsFilter.current.northE.lng &&
+                  Number(ite.longitude) > boundsFilter.current.southW.lng
+        })
+        return filterd
+      }  else{
+        return citydata
+      }
+  }  
   const filterdItemsWithoutBounds =() => {
-      const filter1 = location.filter((item) => {
+      const filter1 = citydata.filter((item) => {
         if(filters.length == 0) {
           return item
         }
@@ -140,7 +146,8 @@ function Main() {
   return (
     <div className="w-full">
         <div className="my-6 w-full">
-          <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
+            <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
+
         </div>
         <div className="w-full flex justify-center">
           <div className="p-5 w-full mt-12 intro-y box sm:mt-5">
@@ -191,7 +198,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              <PieChartCustomized keyFilter="SPO2" filterdData={filterdItems2}/>
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -212,7 +219,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/>
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -237,11 +244,12 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/>
             </div>
           </div>         
-        </div>    
-        <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable>
+        </div>  
+        <Table applyFilters={filterdItems2} filterBox={filters}></Table>  
+        {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
         </div>    
 
       </div>

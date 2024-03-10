@@ -1,7 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import DashboardOverview1 from "../pages/DashboardOverview1";
 import DashboardOverview2 from "../pages/DashboardOverview2";
-import DashboardOverview3 from "../pages/DashboardOverview3";
 import DashboardOverview4 from "../pages/DashboardOverview4";
 import Categories from "../pages/Categories";
 import AddProduct from "../pages/AddProduct";
@@ -70,7 +69,7 @@ import Slider from "../pages/Slider";
 import ImageZoom from "../pages/ImageZoom";
 
 import Layout from "../themes";
-import { Dashbord, DashbordGoogleMap } from "@/pages/CustomPages";
+import { Dashbord, DashbordGoogleMap,DashbordOverView3 } from "@/pages/CustomPages";
 
 function Router() {
   const routes = [
@@ -88,7 +87,7 @@ function Router() {
         },
         {
           path: "dashboard-overview-3",
-          element: <DashboardOverview3 />,
+          element: <DashbordOverView3 />,
         },
         {
           path: "dashboard-overview-4",

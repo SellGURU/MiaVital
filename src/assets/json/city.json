@@ -1,0 +1,7 @@
+[
+    {"id":"1","CityName":"Basavanagudi","riskLevel":"High","HeartRate":54,"BloodPressure":"113/62","Temperature":36.9,"RespirationRate":17,"SPO2":88,"latitude":12.9406,"longitude":77.5738,"gender":{"Male":600,"Female":520,"Other":30},"AgeGroup":{"<= 18":9300,"18-35":10000,"35-75":9000,">= 75":7600}},
+    {"id":"2","CityName":"Koramangala","riskLevel":"Low","HeartRate":62,"BloodPressure":"123/72","Temperature":36.9,"RespirationRate":17,"SPO2":98,"latitude":12.9352,"longitude":77.6245,"gender":{"Male":1200,"Female":1220,"Other":40},"AgeGroup":{"<= 18":6300,"18-35":15000,"35-75":8000,">= 75":5600}},
+    {"id":"3","CityName":"Rajajinagar","riskLevel":"Low","HeartRate":62,"BloodPressure":"123/72","Temperature":36.9,"RespirationRate":17,"SPO2":54,"latitude":12.9982,"longitude":77.5530,"gender":{"Male":3200,"Female":3420,"Other":100},"AgeGroup":{"<= 18":7300,"18-35":13000,"35-75":9000,">= 75":7600}},
+    {"id":"4","CityName":"Indira Nagar","riskLevel":"High","HeartRate":62,"BloodPressure":"123/72","Temperature":36.9,"RespirationRate":17,"SPO2":44,"latitude":26.8799,"longitude":80.9926,"gender":{"Male":95354,"Female":94025,"Other":2600},"AgeGroup":{"<= 18":9800,"18-35":18000,"35-75":9000,">= 75":7600}},
+    {"id":"5","CityName":"Aavalahalli ","riskLevel":"High","HeartRate":62,"BloodPressure":"123/72","Temperature":36.9,"RespirationRate":17,"SPO2":44,"latitude":13.0357,"longitude":77.7354,"gender":{"Male":85354,"Female":97025,"Other":3600},"AgeGroup":{"<= 18":9800,"18-35":20000,"35-75":9000,">= 75":7600}}
+]
