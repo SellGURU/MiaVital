@@ -8,6 +8,7 @@ import EnhancedTable from "@/components/EnhancedTable";
 import location from "@/assets/json/location.json";
 import MixBarChart from "@/components/MixBarChart";
 import PieChartCustomized from "@/components/PieChartCustomized";
+import TrendsChart from "@/components/TrendsChart";
 
 function Main() {
   const [salesReportFilter, setSalesReportFilter] = useState<string>();
@@ -33,8 +34,9 @@ function Main() {
             <MapBox></MapBox>
         </div>
         <div className="w-full flex flex-col justify-center mt-[430px]">
-            {/* <div className="title mt-10 mb-6 font-medium">Overview</div>
-            <div className="grid grid-cols-2 grid-flow-row gap-4 ">
+          <div className="title mt-10 mb-6 font-medium">Overview</div>
+          <TrendsChart/>
+            {/*<div className="grid grid-cols-2 grid-flow-row gap-4 ">
               <div className="border rounded-lg p-6 bg-white">
                 Heart Rate
                 <MixBarChart/>
