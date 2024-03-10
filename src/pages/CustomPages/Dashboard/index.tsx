@@ -21,6 +21,8 @@ function Main() {
   const filterdItems =() => { 
       return location
   }
+  // const lower="<=";
+  // const uper=">=";
   return (
     <div className="w-full">
         <div className="my-6 w-full">
@@ -30,7 +32,7 @@ function Main() {
             <MapBox></MapBox>
         </div>
         <div className="w-full flex flex-col justify-center mt-[430px]">
-            <div className="title mt-10 mb-6 font-medium">Overview</div>
+            {/* <div className="title mt-10 mb-6 font-medium">Overview</div>
             <div className="grid grid-cols-2 grid-flow-row gap-4 ">
               <div className="border rounded-lg p-6 bg-white">
                 Heart Rate
@@ -52,17 +54,76 @@ function Main() {
             <div className="grid grid-cols-3 grid-flow-row gap-4 my-4">
               <div className="border rounded-lg p-6 bg-white">
                 SPO2
-                <PieChartCustomized/>
+                <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#48C3B5] rounded-full"></div>
+                      <div className="">{lower} 50</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
+                      <div className="">50 - 70</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#6432C9] rounded-full"></div>
+                      <div className="">70 - 90</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
+                      <div className="">{uper} 90</div>
+                    </div>      
+                  </div>
+                  
+                  <PieChartCustomized/>
+                </div>
               </div>    
               <div className="border rounded-lg p-6 bg-white">
                 Gender
-                <PieChartCustomized/>
+                <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#236AF2] rounded-full"></div>
+                      <div className="">Male</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
+                      <div className="">Female</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
+                      <div className="">Others</div>
+                    </div>      
+                  </div>
+                  
+                  <PieChartCustomized/>
+                </div>
               </div> 
               <div className="border rounded-lg p-6 bg-white">
                 Age
-                <PieChartCustomized/>
+                <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#6432C9] rounded-full"></div>
+                      <div className="">{lower} 18</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#48C3B5] rounded-full"></div>
+                      <div className="">18 - 35</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
+                      <div className="">35 - 75</div>
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
+                      <div className="">{uper} 75</div>
+                    </div>      
+                  </div>
+                  
+                  <PieChartCustomized/>
+                </div>
               </div>         
-            </div>
+            </div> */}
 
             <EnhancedTable applyFilter={filterdItems}></EnhancedTable>
         </div>
