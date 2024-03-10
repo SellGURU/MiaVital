@@ -170,7 +170,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized/>
+              <PieChartCustomized filterdData={filterdItems}/>
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -191,7 +191,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized/>
+              <PieChartCustomized filterdData={filterdItems}/>
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -216,7 +216,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized/>
+              <PieChartCustomized filterdData={filterdItems}/>
             </div>
           </div>         
         </div>    
