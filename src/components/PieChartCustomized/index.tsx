@@ -1,4 +1,6 @@
-import React from 'react';
+import { subscribe } from '@/utils/event';
+import { describe } from 'node:test';
+import React, { useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 interface DataItem {
@@ -83,13 +85,58 @@ const renderCustomizedLabel = ({
 //       return 'purple'
 //   }
 // } 
-const PieChartCustomized: React.FC = () => {
+interface PieChartCustomized {
+  filterdData :() => Array<any>
+}
+const PieChartCustomized: React.FC<PieChartCustomized> = ({filterdData}) => {
+  // const [data2,setData2] = useState(filterdData())
+  const [resolveDatafinal,setresolveDatafinal] = useState([
+       { name: 'High', value: 0 },
+       { name: 'Low', value: 0 },
+       { name: 'Midrate', value: 0 },
+  ])
+  const resolveDataChart = (data2:Array<any>) => {
+    let data = data2.map((item) => item.spo2)
+    let counter1 = 0
+    let counter2 = 0
+    let counter3 = 0
+    let resolve = data.map((item) => {
+      console.log(resolveMasklayer(item))
+      if(resolveMasklayer(item) == 'High'){
+        counter1 ++
+      }
+      if(resolveMasklayer(item) == 'Low'){
+        counter2 ++
+      }
+      if(resolveMasklayer(item) == 'Midrate'){
+        counter3 ++
+      }            
+    })
+    console.log(counter1)
+    setresolveDatafinal([
+       { name: 'High', value: counter1 },
+       { name: 'Low', value: counter2},
+       { name: 'Midrate', value: counter3 },      
+    ])
+    console.log(data)
+  }
+  const resolveMasklayer = (item:number) => {
+    if(item > 95 ){
+      return 'High'
+    }else if(item >= 90){
+      return 'Midrate'
+    }
+    return 'Low'
 
+  }
+  subscribe("mapChange",() => {
+    resolveDataChart(filterdData())
+  })
   return (
     // <ResponsiveContainer width="100%" height={300}>
       <PieChart width={220} height={220}>
         <Pie
-          data={data}
+          data={resolveDatafinal}
           cx="50%"
           cy="50%"
           labelLine={false}
