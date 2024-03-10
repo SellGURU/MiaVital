@@ -1,4 +1,4 @@
-import { createRef, useEffect } from "react";
+import React, { createRef, useEffect } from "react";
 import { initializeMap, MapConfig, LeafletElement } from "./leaflet-map-loader";
 import clsx from "clsx";
 
@@ -11,22 +11,22 @@ export type Init = (
 interface LeafletMapLoaderProps extends React.ComponentPropsWithoutRef<"div"> {
   init: Init;
   darkMode?: boolean;
+  mapRef:React.MutableRefObject<any>
 }
 
 function LeafletMapLoader(props: LeafletMapLoaderProps) {
-  const mapRef = createRef<LeafletElement>();
-
+  // const mapRef = createRef<LeafletElement>();
   useEffect(() => {
     props.init((mapConfig) => {
-      if (mapRef.current) {
-        return initializeMap(mapRef.current, mapConfig);
+      if (props.mapRef.current) {
+        return initializeMap(props.mapRef.current, mapConfig);
       }
     });
   }, [props.init]);
 
   return (
     <div
-      ref={mapRef}
+      ref={props.mapRef}
       className={clsx([
         !props.darkMode && "[&_.leaflet-tile-pane]:saturate-[.3]",
         props.darkMode &&

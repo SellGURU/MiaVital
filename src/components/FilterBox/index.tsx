@@ -2,13 +2,13 @@ import { useState } from "react"
 import FilterItem from "./FilterItem"
 import AddFilter from "./AddFilter"
 
-interface filterProps {
-    item:string
-    value:string
-}
 
-const FilterBox = () => {
-    const [filters,setFilters] = useState<Array<filterProps>>([])
+interface FilterBoxInterface {
+    filters:Array<filterProps>
+    setFilters:(filters:Array<filterProps>) => void
+}
+const FilterBox:React.FC<FilterBoxInterface> = ({filters,setFilters}) => {
+    // const [filters,setFilters] = useState<Array<filterProps>>([])
     const deleteFilter = (item:any) => {
         const filtered = filters.filter((val) => val.item != item.item)
         setFilters([...filtered])

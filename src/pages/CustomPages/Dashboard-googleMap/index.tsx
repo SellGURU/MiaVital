@@ -1,8 +1,7 @@
 import _ from "lodash";
-import { useEffect, useRef, useState } from "react";
+import { createRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { TinySliderElement } from "@/components/Base/TinySlider";
-import MapBox from "@/components/MapBox";
 import FilterBox from "@/components/FilterBox";
 import EnhancedTable from "@/components/EnhancedTable";
 import LeafletMap from "@/components/LeafletMap";
@@ -10,14 +9,16 @@ import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
 import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
+import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
+import { publish } from "@/utils/event";
 
 function Main() {
-  const [salesReportFilter, setSalesReportFilter] = useState<string>();
-  const boundsFilter = useRef<any>({
-    northE:new LatLng(13.00623032604816,77.69445419311525),
-    southW: new LatLng(12.937645284624287,77.49292373657228)    
-  })
+  const mapRef = createRef<LeafletElement>();
 
+  const boundsFilter = useRef({
+    northE:new LatLng(13.00623032604816,77.69445419311525),
+    southW: new LatLng(12.937645284624287,77.49292373657228)        
+  })
   const importantNotesRef = useRef<TinySliderElement>();
   const prevImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("prev");
@@ -25,30 +26,106 @@ function Main() {
   const nextImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("next");
   };
+  const resolveFilterRate = (filterItem:filterProps,item:any) => {
+    switch(filterItem.item) {
+      case 'spo2':
+        if(Number(item[filterItem.item]) >= 95) {
+          return 'High'
+        }
+        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
+          return 'Midrate'
+        }
+        return 'Low'
+      case 'respirationRate':
+        if(Number(item[filterItem.item]) >= 20) {
+          return 'High'
+        }
+        if(Number(item[filterItem.item]) >= 12 && Number(item[filterItem.item]) < 20){
+          return 'Midrate'
+        }
+        return 'Low'     
+      case 'bloodPressure':
+        if(Number(item[filterItem.item]) >= 120) {
+          return 'High'
+        }
+        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
+          return 'Midrate'
+        }
+        return 'Low'               
+      default : return item[filterItem.item]
+    }
+  }
   const filterdItems =() => {
-      if(boundsFilter.current){
-        const filterd = location.filter((ite) => {
+      const filter1 = location.filter((item) => {
+        if(filters.length == 0) {
+          return item
+        }
+        let maps = filters.filter(fil => {
+          if(resolveFilterRate(fil,item) == fil.value){
+            return fil
+          }
+        })
+        if(maps.length == filters.length){
+          return item
+        }
+      })
+      if(boundsFilter){
+        const filterd = filter1.filter((ite) => {
           return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
                   Number(ite.latitude) < boundsFilter.current.northE.lat &&
                   Number(ite.longitude) < boundsFilter.current.northE.lng &&
                   Number(ite.longitude) > boundsFilter.current.southW.lng
         })
         return filterd
-      }    
-      return location
+      }  else{
+        return location
+      }
   }
+  const filterdItemsWithoutBounds =() => {
+      const filter1 = location.filter((item) => {
+        if(filters.length == 0) {
+          return item
+        }
+        let maps = filters.filter(fil => {
+          if(resolveFilterRate(fil,item) == fil.value){
+            return fil
+          }
+        })
+        if(maps.length == filters.length){
+          return item
+        }
+      })
+      return filter1
+  }
+  const [filters,setFilters] = useState<Array<filterProps>>([])
+
+  useEffect(() => {
+    if(mapRef.current){
+      mapRef.current.map.addEventListener('mouseup',() => {
+        boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
+        boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
+        publish('mapChange',{})
+      })      
+      mapRef.current.map.addEventListener('zoom',() => {
+        boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
+        boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
+        publish('mapChange',{})
+      })            
+    }
+  })
   const lower="<=";
   const uper=">=";
   return (
     <div className="w-full">
-      <div className="my-6 w-full">
-        <FilterBox></FilterBox>
-      </div>
-      <div className="w-full flex justify-center">
-        <div className="p-5 w-full mt-12 intro-y box sm:mt-5">
-          <LeafletMap applyFilter={filterdItems} boundsFilter={boundsFilter} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+        <div className="my-6 w-full">
+            <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
+
         </div>
-      </div>
+        <div className="w-full flex justify-center">
+          <div className="p-5 w-full mt-12 intro-y box sm:mt-5">
+            <LeafletMap mapRef={mapRef} applyFilters={filterdItemsWithoutBounds} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+          </div>
+        </div>
       <div className="w-full flex flex-col justify-center mt-[56px]">
 
         <div className="title mb-6 font-medium">Overview</div>
@@ -142,11 +219,11 @@ function Main() {
               <PieChartCustomized/>
             </div>
           </div>         
-        </div>
+        </div>    
+        <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable>
+        </div>    
 
-        <EnhancedTable applyFilter={filterdItems} ></EnhancedTable>
       </div>
-    </div>
   );
 }
 

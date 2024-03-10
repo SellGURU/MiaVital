@@ -21,6 +21,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { LatLng } from 'leaflet';
+import { publish, subscribe } from '@/utils/event';
+import { useConstructor } from '@/utils/helper';
 
 
 
@@ -308,7 +310,8 @@ interface boundsFilter {
 }
 
 interface EnhancedTable {
-  applyFilter:() => Array<Data>
+  applyFilters:() => Array<Data>
+  filterBox:Array<filterProps>
 }
 export default function EnhancedTable(props:EnhancedTable) {
   const [order, setOrder] = React.useState<Order>('asc');
@@ -317,9 +320,14 @@ export default function EnhancedTable(props:EnhancedTable) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows,setRows] = React.useState(props.applyFilter())
+  const [rows,setRows] = React.useState(props.applyFilters())
   React.useEffect(() => {
-    setRows(props.applyFilter())
+    setRows(props.applyFilters())
+    publish('mapChange',{})
+  },[props.filterBox])
+
+  subscribe('mapChange',() => {
+    setRows(props.applyFilters())
   })
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -332,7 +340,7 @@ export default function EnhancedTable(props:EnhancedTable) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = rows.map((n: { id: any; }) => n.id);
       setSelected(newSelected);
       return;
     }

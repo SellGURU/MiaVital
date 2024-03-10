@@ -8,7 +8,7 @@ interface AddFilterProps  {
 
 const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const [openFilter,setOpenFilter] = useState(false)
-    const [categoryfilter,setCategoryFilter] =useState('Risk Level')
+    const [categoryfilter,setCategoryFilter] =useState('riskLevel')
     const [lavelFilter,setLevelFilter] = useState('Low')
 
     const addFilter = () => {
@@ -33,11 +33,11 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                     <FormSelect value={categoryfilter} onChange={(e) => {
                         setCategoryFilter(e.target.value)
                     }} formSelectSize="sm" className="w-[144px]">
-                        <option value={"Risk Level"}>Risk Level</option>
-                        <option value={"Risk Category"}>Risk Category</option>
-                        <option value={"SPO2"}>SPO2</option>
-                        <option value={"Respiration Rate"}>Respiration Rate</option>
-                        <option value={"Blood Pressure"}>Blood Pressure</option>
+                        <option value={"riskLevel"}>Risk Level</option>
+                        <option value={"riskCategory"}>Risk Category</option>
+                        <option value={"spo2"}>SPO2</option>
+                        <option value={"respirationRate"}>Respiration Rate</option>
+                        <option value={"bloodPressure"}>Blood Pressure</option>
                     </FormSelect>                    
                    </div>
                    <div>:</div>

@@ -34,3 +34,9 @@ type DotNestedKeys<T> = (
 ) extends infer D
   ? Extract<D, string>
   : never;
+
+
+type filterProps = {
+    item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2'
+    value:string
+}

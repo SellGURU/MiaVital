@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { useState } from "react";
 import { parseColor } from "tailwindcss/lib/util/color";
 
 dayjs.extend(duration);
@@ -198,8 +199,16 @@ const slideDown = (
     callback(el);
   }, duration);
 };
-
+let useConstructor: any = (callBack = () => {}) => {
+  const [hasBeenCalled, setHasBeenCalled] = useState(false);
+  if (hasBeenCalled) {
+    return;
+  }
+  callBack();
+  setHasBeenCalled(true);
+};
 export {
+  useConstructor,
   cutText,
   formatDate,
   capitalizeFirstLetter,

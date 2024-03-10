@@ -11,6 +11,7 @@ import PieChartCustomized from "@/components/PieChartCustomized";
 
 function Main() {
   const [salesReportFilter, setSalesReportFilter] = useState<string>();
+  const [filters,setFilters] = useState<Array<filterProps>>([])
   const importantNotesRef = useRef<TinySliderElement>();
   const prevImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("prev");
@@ -26,7 +27,7 @@ function Main() {
   return (
     <div className="w-full">
         <div className="my-6 w-full">
-            <FilterBox></FilterBox>
+            {/* <FilterBox></FilterBox> */}
         </div>
         <div className="w-full flex justify-center">
             <MapBox></MapBox>
@@ -125,7 +126,7 @@ function Main() {
               </div>         
             </div> */}
 
-            <EnhancedTable applyFilter={filterdItems}></EnhancedTable>
+            {/* <EnhancedTable applyFilter={filterdItems}></EnhancedTable> */}
         </div>
     </div>
   );

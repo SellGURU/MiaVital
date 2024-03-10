@@ -2,19 +2,20 @@ import "@/assets/css/vendors/leaflet.css";
 import LeafletMapLoader, { Init } from "@/components/Base/LeafletMapLoader";
 import { getColor } from "@/utils/colors";
 import { selectDarkMode } from "@/stores/darkModeSlice";
-import location from "@/assets/json/location.json";
+// import location from "@/assets/json/location.json";
 import { selectColorScheme } from "@/stores/colorSchemeSlice";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { LatLng } from "leaflet";
 import { useAppSelector } from "@/stores/hooks";
+import { publish, subscribe } from "@/utils/event";
 
 interface boundsFilter {
   northE:LatLng
   southW:LatLng
 }
 type boundsFiltertype = {
-  boundsFilter:React.MutableRefObject<boundsFilter>
-  applyFilter:() =>void
+  applyFilters:() => Array<any>
+  mapRef:React.MutableRefObject<any>
 }
 
 type MainProps = React.ComponentPropsWithoutRef<"div"> & boundsFiltertype;
@@ -35,9 +36,10 @@ function Main(props: MainProps) {
   // })
   // changeBunds()
   const init: Init = async (initializeMap) => {
-    const mapInstance = await initializeMap({
+    console.log()
+    const mapInstance =await initializeMap({
       config: {
-        center: [12.97194, 77.59369],
+        center:[12.97194, 77.59369],
         zoom: 13,
       },
     });
@@ -59,7 +61,7 @@ function Main(props: MainProps) {
       const markers = leaflet.markerClusterGroup({
         maxClusterRadius: 30,
         iconCreateFunction: function (cluster) {
-          console.log(cluster)
+          // console.log(cluster)
           const risks = cluster.getAllChildMarkers().find(item => item.options.attribution == 'High')
           let color =
             darkMode && colorScheme
@@ -102,7 +104,26 @@ function Main(props: MainProps) {
       });
 
       map.addLayer(markers);
-
+      subscribe('mapChange',() => {
+        markers.clearLayers()
+        props.applyFilters().map(function (markerElem:any) {
+          const marker = leaflet.marker(
+            {
+              lat: markerElem.latitude,
+              lng: markerElem.longitude,
+            },
+            {
+              title: markerElem.name,
+              attribution:markerElem.riskLevel,
+              icon: leaflet.icon({
+                iconUrl: `data:image/svg+xml;base64,${markerElem.riskLevel == 'High' ?mapMarkerSvgRed :mapMarkerSvg}`,
+                iconAnchor: leaflet.point(10, 35),
+              }),
+            }
+          );
+          markers.addLayer(marker);
+        });          
+      })
       let color =
         darkMode && colorScheme
           ? getColor("gray.100",0.9)
@@ -119,14 +140,15 @@ function Main(props: MainProps) {
         darkMode && colorScheme
           ? getColor("red.500")
           : getColor("red.500");        
-    const mapMarkerSvgRed = window.btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="31.063" viewBox="0 0 20 31.063">
+        const mapMarkerSvgRed = window.btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="31.063" viewBox="0 0 20 31.063">
                 <g id="Group_16" data-name="Group 16" transform="translate(-408 -150.001)">
                   <path id="Subtraction_21" data-name="Subtraction 21" d="M10,31.064h0L1.462,15.208A10,10,0,1,1,20,10a9.9,9.9,0,0,1-1.078,4.522l-.056.108c-.037.071-.077.146-.121.223L10,31.062ZM10,2a8,8,0,1,0,8,8,8,8,0,0,0-8-8Z" transform="translate(408 150)" fill="${color}"/>
                   <circle id="Ellipse_26" data-name="Ellipse 26" cx="6" cy="6" r="6" transform="translate(412 154)" fill="${color}"/>
                 </g>
               </svg>
             `);
-      location.map(function (markerElem) {
+
+      props.applyFilters().map(function (markerElem:any) {
         const marker = leaflet.marker(
           {
             lat: markerElem.latitude,
@@ -143,24 +165,23 @@ function Main(props: MainProps) {
         );
         markers.addLayer(marker);
       });
-      map.addEventListener('mouseup',(e) => {
-        // setBoundsFilter(map.getBounds())
-        // setBoundsFilter({
-        //   northE:map.getBounds().getNorthEast(),
-        //   southW:map.getBounds().getSouthWest()
-        // })
-        props.boundsFilter.current.northE = map.getBounds().getNorthEast()
-        props.boundsFilter.current.southW = map.getBounds().getSouthWest()
-        // render()
-        props.applyFilter()
-        // checklocations()
-      })
-      map.addEventListener("zoom",() => {
-        props.boundsFilter.current.northE = map.getBounds().getNorthEast()
-        props.boundsFilter.current.southW = map.getBounds().getSouthWest()
-        // render()
-        props.applyFilter()        
-      })
+      // map.addEventListener('mouseup',(e) => {
+      //   // setBoundsFilter(map.getBounds())
+      //   // setBoundsFilter({
+      //   //   northE:map.getBounds().getNorthEast(),
+      //   //   southW:map.getBounds().getSouthWest()
+      //   // })
+      //   props.boundsFilter.current.northE = map.getBounds().getNorthEast()
+      //   props.boundsFilter.current.southW = map.getBounds().getSouthWest()
+      //   // render()
+      //   // props.applyFilter()
+      //   // checklocations()
+      // })
+      // map.addEventListener("zoom",() => {
+      //   props.boundsFilter.current.northE = map.getBounds().getNorthEast()
+      //   props.boundsFilter.current.southW = map.getBounds().getSouthWest()
+      //   // render()     
+      // })
       // setBoundsFilter({
       //   northE:map.getBounds().getNorthEast(),
       //   southW:map.getBounds().getSouthWest()        
@@ -170,6 +191,7 @@ function Main(props: MainProps) {
 
   return (
     <LeafletMapLoader
+      mapRef={props.mapRef}
       init={init}
       darkMode={darkMode}
       className={props.className}
