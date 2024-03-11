@@ -69,7 +69,7 @@ import Slider from "../pages/Slider";
 import ImageZoom from "../pages/ImageZoom";
 
 import Layout from "../themes";
-import { Dashbord, DashbordGoogleMap,DashbordOverView3 } from "@/pages/CustomPages";
+import { Dashbord, DashbordGoogleMap,DashbordOverView3 ,DashbordOverView4} from "@/pages/CustomPages";
 
 function Router() {
   const routes = [
@@ -91,7 +91,7 @@ function Router() {
         },
         {
           path: "dashboard-overview-4",
-          element: <DashboardOverview4 />,
+          element: <DashbordOverView4 />,
         },
         {
           path: "categories",

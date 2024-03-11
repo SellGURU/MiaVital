@@ -8,8 +8,8 @@ interface AddFilterProps  {
 
 const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const [openFilter,setOpenFilter] = useState(false)
-    const [categoryfilter,setCategoryFilter] =useState('riskLevel')
-    const [lavelFilter,setLevelFilter] = useState('Low')
+    const [categoryfilter,setCategoryFilter] =useState('')
+    const [lavelFilter,setLevelFilter] = useState('')
 
     const addFilter = () => {
         const myfilters = filters
@@ -25,19 +25,26 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
         }
         // let filters = 
     }
+    const filtersBox= [
+        {
+            name:"",
+            mode:""
+        }
+    ]
     return (
         <>
             {openFilter ?
                 <div className="w-[376px] h-10 px-2 bg-white justify-between flex items-center rounded-[10px]">
                    <div>
-                    <FormSelect value={categoryfilter} onChange={(e) => {
+                    <FormSelect  value={categoryfilter} onChange={(e) => {
                         setCategoryFilter(e.target.value)
                     }} formSelectSize="sm" className="w-[144px]">
+                        <option className="hidden" value="" disabled selected>Filter Item...</option>
                         <option value={"riskLevel"}>Risk Level</option>
-                        <option value={"riskCategory"}>Risk Category</option>
-                        <option value={"spo2"}>SPO2</option>
-                        <option value={"respirationRate"}>Respiration Rate</option>
-                        <option value={"bloodPressure"}>Blood Pressure</option>
+                        {/* <option value={"riskLevel"}>Risk Category</option> */}
+                        <option value={"SPO2"}>SPO2</option>
+                        <option value={"RespirationRate"}>Respiration Rate</option>
+                        <option value={"BloodPressure"}>Blood Pressure</option>
                     </FormSelect>                    
                    </div>
                    <div>:</div>
@@ -45,8 +52,9 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                     <FormSelect value={lavelFilter} onChange={(e) => {
                         setLevelFilter(e.target.value)
                     }} formSelectSize="sm" className="w-[144px]">
+                        <option className="hidden" value="" disabled selected>Filter Item...</option>
                         <option>Low</option>
-                        <option>Midrate</option>
+                        <option>Moderate</option>
                         <option>High</option>
                     </FormSelect>                    
                    </div>                   

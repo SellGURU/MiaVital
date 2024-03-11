@@ -8,11 +8,11 @@ import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
 import citydata from "@/assets/json/city.json"
-import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
 import Table from "@/components/Table";
+import PieChartData from "@/components/PieChartData";
 
 function Main() {
   const mapRef = createRef<LeafletElement>();
@@ -197,8 +197,8 @@ function Main() {
                   <div className="">{uper} 90</div>
                 </div>      
               </div>
-              
-              <PieChartCustomized keyFilter="SPO2" filterdData={filterdItems2}/>
+              <PieChartData keyFilter="spo2" filterdData={filterdItems2}></PieChartData>
+              {/* <PieChartCustomized keyFilter="SPO2" filterdData={filterdItems2}/> */}
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -219,7 +219,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/>
+              {/* <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/> */}
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -244,13 +244,13 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/>
+              {/* <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/> */}
             </div>
           </div>         
         </div>  
-        <Table applyFilters={filterdItems2} filterBox={filters}></Table>  
+        {/* <Table applyFilters={filterdItems2} filterBox={filters}></Table>   */}
         {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
-        </div>    
+      </div>    
 
       </div>
   );

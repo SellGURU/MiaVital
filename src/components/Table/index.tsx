@@ -74,37 +74,43 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'CityName',
+    id: 'name',
     numeric: false,
     disablePadding: true,
     label: 'City Name',
   },
   {
-    id: 'HeartRate',
+    id: 'membersLength',
+    numeric: true,
+    disablePadding: true,
+    label: 'Number of Members',
+  },  
+  {
+    id: 'heartRate',
     numeric: true,
     disablePadding: true,
     label: 'Heart Rate',
   },
   {
-    id: 'BloodPressure',
+    id: 'DBPbloodPressure',
     numeric: false,
     disablePadding: true,
     label: 'Blood Pressure',
   },
   {
-    id: 'Temperature',
+    id: 'temperature',
     numeric: true,
     disablePadding: true,
     label: 'Temperature',
   },
   {
-    id: 'RespirationRate',
+    id: 'respirationRate',
     numeric: true,
     disablePadding: true,
     label: 'Respiration Rate',
   },
   {
-    id: 'SPO2',
+    id: 'spo2',
     numeric: true,
     disablePadding: true,
     label: 'SPO2',
@@ -320,7 +326,7 @@ export default function EnhancedTable(props:EnhancedTable) {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2 }} style={{boxShadow:'none'}}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
@@ -368,13 +374,14 @@ export default function EnhancedTable(props:EnhancedTable) {
                       scope="row"
                       padding="none"
                     >
-                      {row.CityName}
+                      {row.name}
                     </TableCell>
-                    <TableCell align="center">{row.HeartRate}</TableCell>
-                    <TableCell align="left">{row.BloodPressure}</TableCell>
-                    <TableCell align="center">{row.Temperature}</TableCell>
-                    <TableCell align="center">{row.RespirationRate}</TableCell>
-                    <TableCell align="center">{row.SPO2}</TableCell>
+                    <TableCell align="center">{row.membersLength}</TableCell>
+                    <TableCell align="center">{Number(row.heartRate).toFixed(2)}</TableCell>
+                    <TableCell align="center">{Number(row.SBPbloodPressure).toFixed(0) + '/' + Number(row.DBPbloodPressure).toFixed(0)}</TableCell>
+                    <TableCell align="center">{Number(row.temperature).toFixed(1)}</TableCell>
+                    <TableCell align="center">{Number(row.respirationRate).toFixed(2)}</TableCell>
+                    <TableCell align="center">{Number(row.spo2).toFixed(0)}</TableCell>
                   </TableRow>
                 );
               })}

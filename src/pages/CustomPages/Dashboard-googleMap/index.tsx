@@ -7,7 +7,7 @@ import EnhancedTable from "@/components/EnhancedTable";
 import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
-import PieChartCustomized from "@/components/PieChartCustomized";
+// import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
@@ -191,7 +191,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -212,7 +212,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -237,7 +237,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div>         
         </div>    
