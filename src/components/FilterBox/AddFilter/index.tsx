@@ -2,8 +2,8 @@ import { FormSelect } from "@/components/Base/Form"
 import { useState } from "react"
 
 interface AddFilterProps  {
-    filters:Array<any>
-    setFilters:(filter:Array<any>) => void
+    filters:Array<filterProps>
+    setFilters:(filter:Array<filterProps>) => void
 }
 
 interface FilterBoxs {
@@ -15,19 +15,37 @@ interface FilterBoxs {
 
 const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const [openFilter,setOpenFilter] = useState(false)
-    const [categoryfilter,setCategoryFilter] =useState('')
+    const [categoryfilter,setCategoryFilter] =useState<keyof humanData | ''>('')
     const [lavelFilter,setLevelFilter] = useState('')
+    const [minimum,setMinimum] =useState('')
+    const [maximum,setMaximum] = useState('')
 
     const addFilter = () => {
         const myfilters = filters
-        if(myfilters.map((val) => val.item).includes(categoryfilter)){
-            myfilters[myfilters.findIndex((item) => item.item == categoryfilter)].value = lavelFilter 
-            setFilters([...myfilters])
-        }else{
-            setFilters([...filters,{
-                item:categoryfilter,
-                value:lavelFilter           
-            }])
+        if(categoryfilter != '') {
+            if(myfilters.map((val) => val.item).includes(categoryfilter)){
+                myfilters[myfilters.findIndex((item) => item.item == categoryfilter)].value = lavelFilter 
+                setFilters([...myfilters])
+            }else if(filtersBox.filter((item) => item.keyItem == categoryfilter)[0].mode == 'list'){
+                setFilters([...filters,{
+                    item:categoryfilter,
+                    value:lavelFilter,
+                    mode:'equal'          
+                }])
+            }else if(filtersBox.filter((item) => item.keyItem == categoryfilter)[0].mode == 'minMax'){
+                setFilters([...filters,
+                    {
+                    item:categoryfilter,
+                    value:minimum,
+                    mode:'min'          
+                    },
+                    {
+                    item:categoryfilter,
+                    value:maximum,
+                    mode:'max'          
+                    },                    
+                ])                                
+            }
 
         }
         // let filters = 
@@ -44,15 +62,33 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
             keyItem:'gender',
             mode:'list',
             list:['Male','Female','Other']
-        },        
+        },
+        {
+            name:"SPO2",
+            keyItem:'spo2',
+            mode:'minMax',
+            list:['50','60','70','80','90','100']
+        },    
+        {
+            name:"Heart Rate",
+            keyItem:'heartRate',
+            mode:'minMax',
+            list:['40','60','80','100','120','140','160','180','200']
+        }, 
+        {
+            name:"Temperature",
+            keyItem:'temperature',
+            mode:'minMax',
+            list:['30','31','32','33','34','35','36','37','38','39','40']
+        },                                       
     ]
     return (
         <>
             {openFilter ?
-                <div className="w-[376px] h-10 px-2 bg-white border border-[#E2E8F0] justify-between flex items-center rounded-[10px]">
+                <div className="min-w-[376px] h-10 px-2 bg-white border border-[#E2E8F0] justify-between flex items-center rounded-[10px]">
                    <div>
                     <FormSelect  value={categoryfilter} onChange={(e) => {
-                        setCategoryFilter(e.target.value)
+                        setCategoryFilter(e.target.value as keyof humanData)
                     }} formSelectSize="sm" className="w-[144px]">
                         <option className="hidden" value="" disabled selected>Filter Item...</option>
                         {filtersBox.map((item) => {
@@ -67,32 +103,62 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                         {/* <option value={"BloodPressure"}>Blood Pressure</option> */}
                     </FormSelect>                    
                    </div>
-                   <div>:</div>
+                   <div className="mx-2">:</div>
                    <div>
-                    <FormSelect value={lavelFilter} onChange={(e) => {
-                        setLevelFilter(e.target.value)
-                    }} formSelectSize="sm" className="w-[144px]">
-                        <option className="hidden" value="" disabled selected>Filter Item...</option>
-                        {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.map((item) => {
-                            return (
-                                <option value={item}>{item}</option>
-                            )
-                        })}
-                        {/* <option>Low</option>
-                        <option>Moderate</option>
-                        <option>High</option> */}
-                    </FormSelect>                    
+                    {
+                        filtersBox.filter((item) => item.keyItem == categoryfilter)[0]?.mode == 'list'?
+                            <FormSelect value={lavelFilter} onChange={(e) => {
+                                setLevelFilter(e.target.value)
+                            }} formSelectSize="sm" className="w-[144px]">
+                                <option className="hidden" value="" disabled selected>Filter Item...</option>
+                                {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.map((item) => {
+                                    return (
+                                        <option value={item}>{item}</option>
+                                    )
+                                })}
+                                {/* <option>Low</option>
+                                <option>Moderate</option>
+                                <option>High</option> */}
+                            </FormSelect>                    
+                        :
+                        <div className="flex ">
+                            <FormSelect value={minimum} onChange={(e) => {
+                                setMinimum(e.target.value)
+                            }} formSelectSize="sm" className="w-[130px] mr-2">
+                                <option className="hidden" value="" disabled selected>Minimum</option>
+                                {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list?.map((item) => {
+                                    return (
+                                        <option value={item}>{item}</option>
+                                    )
+                                })}                                
+                            </FormSelect>
+                            <FormSelect  value={maximum} onChange={(e) => {
+                                setMaximum(e.target.value)
+                            }}  formSelectSize="sm" className="w-[130px] mr-2">
+                                <option className="hidden" value="" disabled selected>Maximum</option>
+                                {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.filter((item) => Number(item) > Number(minimum)).map((item) => {
+                                    return (
+                                        <option value={item}>{item}</option>
+                                    )
+                                })}                               
+                            </FormSelect>                                
+                        </div>
+                    }
                    </div>                   
                     <div className="flex gap-1 items-center">
                         <img onClick={() => {
                             addFilter()
                             setCategoryFilter('')
                             setLevelFilter('')
+                            setMaximum('')
+                            setMinimum('')
                             setOpenFilter(false)                            
                             }} src="./fi_check.svg" alt="" />
                         <img className="cursor-pointer" onClick={() => {
                             setCategoryFilter('')
                             setLevelFilter('')
+                            setMaximum('')
+                            setMinimum('')                            
                             setOpenFilter(false)
                             }} src="./fi_x.svg" alt="" />
                     </div>

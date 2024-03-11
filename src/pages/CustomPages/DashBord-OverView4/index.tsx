@@ -75,9 +75,21 @@ const Main = () => {
           return item
         }
         let maps = filters.filter(fil => {
-          if(item[fil.item] == fil.value){
-            return fil
+          if(fil.mode == 'equal'){
+              if(item[fil.item] == fil.value){
+                return fil
+              }
           }
+          if(fil.mode == 'min'){
+              if(Number(item[fil.item]) >= Number(fil.value)){
+                return fil
+              }
+          }
+          if(fil.mode == 'max'){
+              if(Number(item[fil.item]) < Number(fil.value)){
+                return fil
+              }
+          }          
         })
         if(maps.length == filters.length){
           return item

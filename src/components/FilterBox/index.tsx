@@ -10,7 +10,7 @@ interface FilterBoxInterface {
 const FilterBox:React.FC<FilterBoxInterface> = ({filters,setFilters}) => {
     // const [filters,setFilters] = useState<Array<filterProps>>([])
     const deleteFilter = (item:any) => {
-        const filtered = filters.filter((val) => val.item != item.item)
+        const filtered = filters.filter((val) => val!=item)
         setFilters([...filtered])
     }
     return (
