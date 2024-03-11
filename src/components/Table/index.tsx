@@ -70,6 +70,7 @@ interface HeadCell {
   id: keyof CityData;
   label: string;
   numeric: boolean;
+  isAverage:boolean;  
 }
 
 const headCells: readonly HeadCell[] = [
@@ -78,42 +79,49 @@ const headCells: readonly HeadCell[] = [
     numeric: false,
     disablePadding: true,
     label: 'City Name',
+    isAverage:false
   },
   {
     id: 'membersLength',
     numeric: true,
     disablePadding: true,
     label: 'Number of Members',
+    isAverage:false
   },  
   {
     id: 'heartRate',
     numeric: true,
     disablePadding: true,
     label: 'Heart Rate',
+    isAverage:true    
   },
   {
     id: 'DBPbloodPressure',
     numeric: true,
     disablePadding: true,
     label: 'Blood Pressure',
+    isAverage:true 
   },
   {
     id: 'temperature',
     numeric: true,
     disablePadding: true,
     label: 'Temperature',
+    isAverage:true 
   },
   {
     id: 'respirationRate',
     numeric: true,
     disablePadding: true,
     label: 'Respiration Rate',
+    isAverage:true 
   },
   {
     id: 'spo2',
     numeric: true,
     disablePadding: true,
     label: 'SPO2',
+    isAverage:true 
   }
 ];
 
@@ -167,7 +175,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              {headCell.label} {headCell.isAverage? <span className="text-[#374151] ml-1 opacity-50 text-[10px] ">(AVG)</span>:undefined}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
