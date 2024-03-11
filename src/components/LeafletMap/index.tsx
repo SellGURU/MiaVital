@@ -219,45 +219,54 @@ function Main(props: MainProps) {
           <div class="p-2 w-full">
             <div class="flex w-full items-center justify-between">
               <div class="text-[12px] text-[#475569]">
-                Blood Pressure
+                Number of Members <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
               </div>
+              <div class="text-[12px] text-gray-800">
+                ${markerElem.membersLength}
+              </div>
+            </div>
+
+            <div class="flex w-full items-center mt-2 justify-between">
               <div class="text-[12px] text-[#475569]">
+                Blood Pressure <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
+              </div>
+              <div class="text-[12px] text-red-500">
                 ${markerElem.SBPbloodPressure.toFixed(0)+'/'+markerElem.DBPbloodPressure.toFixed(0)}
               </div>
             </div>
 
             <div class="flex w-full mt-2 items-center justify-between">
               <div class="text-[12px] text-[#475569]">
-                Heart Rate
+                Heart Rate <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
               </div>
-              <div class="text-[12px] text-[#475569]">
+              <div class="text-[12px] text-green-500">
                 ${markerElem.heartRate.toFixed(2)}
               </div>
             </div>    
             
             <div class="flex w-full mt-2 items-center justify-between">
               <div class="text-[12px] text-[#475569]">
-                SPO2
+                SPO2 <span class="text-[#374151] text-[10px] opacity-50 ">(AVG)</span>
               </div>
-              <div class="text-[12px] text-[#475569]">
+              <div class="text-[12px] text-green-500">
                 ${markerElem.spo2.toFixed(2)}
               </div>
             </div>  
 
             <div class="flex w-full mt-2 items-center justify-between">
               <div class="text-[12px] text-[#475569]">
-                Temperature
+                Temperature<span class="text-[#374151] text-[10px] opacity-50 "> (AVG)</span>
               </div>
-              <div class="text-[12px] text-[#475569]">
+              <div class="text-[12px] text-green-500">
                 ${markerElem.temperature.toFixed(2)}
               </div>
             </div>    
             
             <div class="flex w-full mt-2 items-center justify-between">
               <div class="text-[12px] text-[#475569]">
-                Respiration Rate
+                Respiration Rate<span class="text-[#374151] opacity-50 text-[10px] "> (AVG)</span>
               </div>
-              <div class="text-[12px] text-[#475569]">
+              <div class="text-[12px] text-orange-400">
                 ${markerElem.respirationRate.toFixed(2)}
               </div>
             </div>              
