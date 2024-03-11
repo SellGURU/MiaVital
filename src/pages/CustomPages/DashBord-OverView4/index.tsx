@@ -38,6 +38,36 @@ const Main = () => {
             }
         })
     }
+    const filterdDataWithBounds = () => {
+        const result = _.groupBy(MainData,'city')
+        let resolve =Object.entries(result).map((item) => {
+            return {
+                "id":item[1][0].id,
+                "name": item[1][0].city,
+                "riskLevel": item[1].map(el =>el.riskLevel).sort((a,b) => item[1].filter((el) =>el.riskLevel == a).length - item[1].filter((el) =>el.riskLevel == b).length).pop() as string,
+                "heartRate": item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length,
+                "DBPbloodPressure": item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length,
+                "SBPbloodPressure": item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length,
+                "temperature": item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length,
+                "respirationRate": item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length,
+                "spo2": item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length,
+                "latitude": item[1][0].latitude,
+                "longitude": item[1][0].longitude,
+                "city": item[1][0].city,        
+                "membersLength":item[1].length  
+            }
+        })
+        if(boundsFilter){
+            const filterd = resolve.filter((ite) => {
+            return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
+                    Number(ite.latitude) < boundsFilter.current.northE.lat &&
+                    Number(ite.longitude) < boundsFilter.current.northE.lng &&
+                    Number(ite.longitude) > boundsFilter.current.southW.lng
+            })
+            return filterd
+        }
+        return resolve
+    }    
     const filterHumanData =() => {
       if(boundsFilter){
         const filterd = MainData.filter((ite) => {
@@ -62,7 +92,12 @@ const Main = () => {
             boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
             publish('mapChange',{})
-        })            
+        })    
+        mapRef.current.map.addEventListener('load',() => {
+            boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
+            boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
+            publish('mapChange',{})
+        })        
         }
     })    
     const lower="<=";
@@ -170,7 +205,7 @@ const Main = () => {
                         </div>
                     </div>         
                     </div>  
-                    <Table applyFilters={filterdData} filterBox={[]}></Table>  
+                    <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
             </div>
