@@ -27,8 +27,128 @@ function Main() {
   // const uper=">=";
   return (
     <div className="w-full">
-        <div className="my-6 w-full">
-            {/* <FilterBox></FilterBox> */}
+        <div className="my-10 w-full text-[#475569] flex flex-col gap-10">
+          {/* <FilterBox></FilterBox> */}
+          <div className="flex flex-row gap-4 justify-start items-center">
+            <div className="flex flex-row gap-2 justify-between items-center px-3 py-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">  
+              <img src="/calendar.svg" className="w-5 h-5"/>
+              <p className="text-xs">Feb 26 - Mar 3</p>
+              <img src="/arrowBottom.svg" className="w-5 h-5 cursor-pointer"/>
+            </div>
+            <div className="flex flex-row gap-2 justify-between items-center px-3 py-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">  
+              <p className="text-xs ">Risk Category:</p>
+              <p className="text-xs font-medium	">COPD</p>
+              <img src="/close.svg" className="w-4 h-4 cursor-pointer"/>
+            </div>
+            <div className="flex flex-row gap-2 justify-between items-center px-3 py-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">  
+              <p className="text-xs ">Blood Pressure:</p>
+              <p className="text-xs font-medium	">Normal Rate</p>
+              <img src="/close.svg" className="w-4 h-4 cursor-pointer"/>
+            </div>
+            <div className="flex flex-row gap-2 justify-between items-center px-3 py-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">  
+              <img src="/filter.svg" className="w-5 h-5 cursor-pointer"/>
+              <p className="text-xs ">Add Filter</p>
+            </div>
+          </div>
+          <div className="flex flex-col justify-start">
+            <p className="font-medium mb-4">Risk Panel</p>
+            <div className="flex flex-row gap-2 justify-start items-center h-[156px]">
+              <div className="font-medium flex flex-col gap-4 items-center h-full justify-center p-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">At Risk<p className="text-[#DC2626]">21</p></div>
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row gap-2 justify-start items-center">
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Pregnancy</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Hypertension</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">CHF</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">COPD</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Stroke</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Mental Health</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-row gap-2 justify-start items-center">
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Arrythmia</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Neurological</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Diabetes</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Sleep Disorders</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Chronic Pain</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                  <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
+                    <p className="font-medium	">Obesity</p>
+                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                      <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">5</p></div>  
+                      <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ms-2">3</p></div>  
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          
         </div>
         <div className="w-full flex justify-center">
             <MapBox></MapBox>
