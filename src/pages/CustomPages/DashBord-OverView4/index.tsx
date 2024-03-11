@@ -1,6 +1,6 @@
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import LeafletMap from "@/components/LeafletMap"
-import { createRef, useEffect, useRef } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import MainData from '@/assets/json/main.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
@@ -9,6 +9,7 @@ import PieChartData from "@/components/PieChartData";
 import { publish } from "@/utils/event";
 import { LatLng } from "leaflet";
 import TrendsChart from "@/components/TrendsChart";
+import FilterBox from "@/components/FilterBox";
 
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
@@ -16,9 +17,8 @@ const Main = () => {
         northE:new LatLng(13.520508153934646,79.26361083984376),
         southW: new LatLng(12.42316552500995,75.92651367187501)        
     })
-    const filterdData = () => {
-        const result = _.groupBy(MainData,'city')
-        console.log(Object.entries(result).map((item) => item[1][0]))
+    const filterdData = () => {           
+        const result = _.groupBy(filterHumanData(),'city')
         
         return Object.entries(result).map((item) => {
             return {
@@ -39,7 +39,7 @@ const Main = () => {
         })
     }
     const filterdDataWithBounds = () => {
-        const result = _.groupBy(MainData,'city')
+        const result = _.groupBy(filterHumanData(),'city')
         let resolve =Object.entries(result).map((item) => {
             return {
                 "id":item[1][0].id,
@@ -65,21 +65,25 @@ const Main = () => {
                     Number(ite.longitude) > boundsFilter.current.southW.lng
             })
             return filterd
-        }
-        return resolve
+        }  else{
+            return resolve
+        }        
     }    
     const filterHumanData =() => {
-      if(boundsFilter){
-        const filterd = MainData.filter((ite) => {
-          return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
-                  Number(ite.latitude) < boundsFilter.current.northE.lat &&
-                  Number(ite.longitude) < boundsFilter.current.northE.lng &&
-                  Number(ite.longitude) > boundsFilter.current.southW.lng
+      const filterlayer = MainData.filter((item) => {
+        if(filters.length == 0) {
+          return item
+        }
+        let maps = filters.filter(fil => {
+          if(item[fil.item] == fil.value){
+            return fil
+          }
         })
-        return filterd
-      }  else{
-        return MainData
-      }
+        if(maps.length == filters.length){
+          return item
+        }
+      })        
+      return filterlayer
     }
     useEffect(() => {
         if(mapRef.current){
@@ -101,12 +105,16 @@ const Main = () => {
         })        
         }
     })    
+    const [filters,setFilters] = useState<Array<filterProps>>([])
     const lower="<=";
     const uper=">=";    
     return (
         <>
             <div className="w-full">
+                <div className="my-6 w-full">
+                    <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
 
+                </div>
                 <div className="w-full mt-5 flex justify-center">
                     <div className="w-full intro-y  ">
                         <LeafletMap mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />

@@ -37,7 +37,7 @@ type DotNestedKeys<T> = (
 
 
 type filterProps = {
-    item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2' | 'gender' | 'age'
+    item:keyof humanData
     value:string
 }
 // "CityName":"Basavanagudi","HeartRate":54,"BloodPressure":"113/62","Temperature":36.9,"RespirationRate":17,"SPO2":88

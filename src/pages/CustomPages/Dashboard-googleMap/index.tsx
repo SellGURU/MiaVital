@@ -66,14 +66,7 @@ function Main() {
           return 'Midrate'
         }
         return 'Low'     
-      case 'bloodPressure':
-        if(Number(item[filterItem.item]) >= 120) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
-          return 'Midrate'
-        }
-        return 'Low'               
+              
       default : return item[filterItem.item]
     }
   }

@@ -6,6 +6,13 @@ interface AddFilterProps  {
     setFilters:(filter:Array<any>) => void
 }
 
+interface FilterBoxs {
+    name:string
+    keyItem:keyof humanData
+    mode:'minMax'|'list'
+    list:Array<string>
+}
+
 const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const [openFilter,setOpenFilter] = useState(false)
     const [categoryfilter,setCategoryFilter] =useState('')
@@ -25,26 +32,39 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
         }
         // let filters = 
     }
-    const filtersBox= [
+    const filtersBox:Array<FilterBoxs>= [
         {
-            name:"",
-            mode:""
-        }
+            name:"Risk Level",
+            keyItem:'riskLevel',
+            mode:'list',
+            list:['Low','Moderate','High']
+        },
+        {
+            name:"Gender",
+            keyItem:'gender',
+            mode:'list',
+            list:['Male','Female','Other']
+        },        
     ]
     return (
         <>
             {openFilter ?
-                <div className="w-[376px] h-10 px-2 bg-white justify-between flex items-center rounded-[10px]">
+                <div className="w-[376px] h-10 px-2 bg-white border border-[#E2E8F0] justify-between flex items-center rounded-[10px]">
                    <div>
                     <FormSelect  value={categoryfilter} onChange={(e) => {
                         setCategoryFilter(e.target.value)
                     }} formSelectSize="sm" className="w-[144px]">
                         <option className="hidden" value="" disabled selected>Filter Item...</option>
-                        <option value={"riskLevel"}>Risk Level</option>
+                        {filtersBox.map((item) => {
+                            return (
+                                <option  value={item.keyItem}>{item.name}</option>
+                            )
+                        })}
+                        {/* <option value={"riskLevel"}>Risk Level</option> */}
                         {/* <option value={"riskLevel"}>Risk Category</option> */}
-                        <option value={"SPO2"}>SPO2</option>
-                        <option value={"RespirationRate"}>Respiration Rate</option>
-                        <option value={"BloodPressure"}>Blood Pressure</option>
+                        {/* <option value={"SPO2"}>SPO2</option> */}
+                        {/* <option value={"RespirationRate"}>Respiration Rate</option> */}
+                        {/* <option value={"BloodPressure"}>Blood Pressure</option> */}
                     </FormSelect>                    
                    </div>
                    <div>:</div>
@@ -53,14 +73,28 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                         setLevelFilter(e.target.value)
                     }} formSelectSize="sm" className="w-[144px]">
                         <option className="hidden" value="" disabled selected>Filter Item...</option>
-                        <option>Low</option>
+                        {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.map((item) => {
+                            return (
+                                <option value={item}>{item}</option>
+                            )
+                        })}
+                        {/* <option>Low</option>
                         <option>Moderate</option>
-                        <option>High</option>
+                        <option>High</option> */}
                     </FormSelect>                    
                    </div>                   
                     <div className="flex gap-1 items-center">
-                        <img onClick={() => {addFilter()}} src="./fi_check.svg" alt="" />
-                        <img className="cursor-pointer" onClick={() => {setOpenFilter(false)}} src="./fi_x.svg" alt="" />
+                        <img onClick={() => {
+                            addFilter()
+                            setCategoryFilter('')
+                            setLevelFilter('')
+                            setOpenFilter(false)                            
+                            }} src="./fi_check.svg" alt="" />
+                        <img className="cursor-pointer" onClick={() => {
+                            setCategoryFilter('')
+                            setLevelFilter('')
+                            setOpenFilter(false)
+                            }} src="./fi_x.svg" alt="" />
                     </div>
                 </div>
             :

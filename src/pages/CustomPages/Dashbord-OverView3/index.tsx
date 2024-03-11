@@ -28,45 +28,41 @@ function Main() {
   const nextImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("next");
   };
-  const resolveFilterRate = (filterItem:filterProps,item:any) => {
-    switch(filterItem.item) {
-      case 'spo2':
-        if(Number(item[filterItem.item]) >= 95) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
-          return 'Midrate'
-        }
-        return 'Low'
-      case 'respirationRate':
-        if(Number(item[filterItem.item]) >= 20) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 12 && Number(item[filterItem.item]) < 20){
-          return 'Midrate'
-        }
-        return 'Low'     
-      case 'bloodPressure':
-        if(Number(item[filterItem.item]) >= 120) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
-          return 'Midrate'
-        }
-        return 'Low'               
-      default : return item[filterItem.item]
-    }
-  }
+  // const resolveFilterRate = (filterItem:filterProps,item:any) => {
+  //   switch(filterItem.item) {
+  //     case 'spo2':
+  //       if(Number(item[filterItem.item]) >= 95) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'
+  //     case 'respirationRate':
+  //       if(Number(item[filterItem.item]) >= 20) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 12 && Number(item[filterItem.item]) < 20){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'     
+  //     case 'bloodPressure':
+  //       if(Number(item[filterItem.item]) >= 120) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'               
+  //     default : return item[filterItem.item]
+  //   }
+  // }
   const filterdItems =() => {
       const filter1 = location.filter((item) => {
         if(filters.length == 0) {
           return item
         }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
+        let maps = filters
         if(maps.length == filters.length){
           return item
         }
@@ -84,19 +80,7 @@ function Main() {
       }
   }
   const filterdItems2 =() => {
-      const filter1 = citydata.filter((item) => {
-        if(filters.length == 0) {
-          return item
-        }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
-        if(maps.length == filters.length){
-          return item
-        }
-      })
+      const filter1 = citydata
       if(boundsFilter){
         const filterd = filter1.filter((ite) => {
           return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
@@ -110,19 +94,7 @@ function Main() {
       }
   }  
   const filterdItemsWithoutBounds =() => {
-      const filter1 = citydata.filter((item) => {
-        if(filters.length == 0) {
-          return item
-        }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
-        if(maps.length == filters.length){
-          return item
-        }
-      })
+      const filter1 = citydata
       return filter1
   }
   const [filters,setFilters] = useState<Array<filterProps>>([])
@@ -146,7 +118,7 @@ function Main() {
   return (
     <div className="w-full">
         <div className="my-6 w-full">
-            <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
+            {/* <FilterBox filters={filters} setFilters={setFilters}></FilterBox> */}
 
         </div>
         <div className="w-full flex justify-center">
