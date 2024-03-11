@@ -127,48 +127,6 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
                       <div className="ml-3">Transactions Report</div>
                     </a>
                   </div>
-                  <div className="mb-2 font-medium">Users</div>
-                  <div className="mb-5">
-                    {_.take(fakerData, 4).map((faker, fakerKey) => (
-                      <a
-                        key={fakerKey}
-                        href=""
-                        className="flex items-center mt-2"
-                      >
-                        <div className="w-8 h-8 image-fit">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            className="rounded-full"
-                            src={faker.photos[0]}
-                          />
-                        </div>
-                        <div className="ml-3">{faker.users[0].name}</div>
-                        <div className="w-48 ml-auto text-xs text-right truncate text-slate-500">
-                          {faker.users[0].email}
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                  <div className="mb-2 font-medium">Products</div>
-                  {_.take(fakerData, 4).map((faker, fakerKey) => (
-                    <a
-                      key={fakerKey}
-                      href=""
-                      className="flex items-center mt-2"
-                    >
-                      <div className="w-8 h-8 image-fit">
-                        <img
-                          alt="Midone Tailwind HTML Admin Template"
-                          className="rounded-full"
-                          src={faker.images[0]}
-                        />
-                      </div>
-                      <div className="ml-3">{faker.products[0].name}</div>
-                      <div className="w-48 ml-auto text-xs text-right truncate text-slate-500">
-                        {faker.products[0].category}
-                      </div>
-                    </a>
-                  ))}
                 </div>
               </div>
             </Transition>
@@ -186,7 +144,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
             </Popover.Button>
             <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
               <div className="mb-5 font-medium">Notifications</div>
-              {_.take(fakerData, 5).map((faker, fakerKey) => (
+              {/* {_.take(fakerData, 5).map((faker, fakerKey) => (
                 <div
                   key={fakerKey}
                   className={clsx([
@@ -216,7 +174,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
                     </div>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </Popover.Panel>
           </Popover>
           {/* END: Notifications */}
@@ -225,14 +183,16 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
             <Menu.Button className="block w-8 h-8 overflow-hidden rounded-full shadow-lg image-fit zoom-in intro-x">
               <img
                 alt="Midone Tailwind HTML Admin Template"
-                src={fakerData[9].photos[0]}
+                src={'./profile.jpg'}
               />
+
             </Menu.Button>
+
             <Menu.Items className="w-56 mt-px relative bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
               <Menu.Header className="font-normal">
-                <div className="font-medium">{fakerData[0].users[0].name}</div>
+                <div className="font-medium">{'Charlie Farhoodi'}</div>
                 <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                  {fakerData[0].jobs[0]}
+                  {'Co-Founder'}
                 </div>
               </Menu.Header>
               <Menu.Divider className="bg-white/[0.08]" />
@@ -254,7 +214,14 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
                 <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
               </Menu.Item>
             </Menu.Items>
+
           </Menu>
+          <div className="z-10 ml-2">
+            <div className="font-medium text-white">{'Charlie Farhoodi'}</div>
+            <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
+              {'Co-Founder'}
+            </div>            
+          </div>
           {/* END: Account Menu */}
         </div>
       </div>

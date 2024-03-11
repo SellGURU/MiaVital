@@ -87,7 +87,7 @@ const Main = () => {
     }
     useEffect(() => {
         if(mapRef.current){
-            console.log(mapRef.current?.map.getBounds())
+            // console.log(mapRef.current?.map.getBounds())
         mapRef.current.map.addEventListener('mouseup',() => {
             boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng

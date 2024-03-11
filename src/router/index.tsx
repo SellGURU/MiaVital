@@ -79,7 +79,7 @@ function Router() {
       children: [
         {
           path: "/",
-          element: <Dashbord/>,
+          element: <DashbordOverView4/>,
         },
         {
           path: "dashboard-overview-2",
@@ -91,7 +91,7 @@ function Router() {
         },
         {
           path: "dashboard-overview-4",
-          element: <DashbordOverView4 />,
+          element: <Dashbord />,
         },
         {
           path: "categories",

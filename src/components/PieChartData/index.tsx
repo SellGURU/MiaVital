@@ -82,7 +82,7 @@ const PieChartData: React.FC<PieChartData> = ({filterdData,keyFilter}) => {
   })
   const resolveDataChart = (data:Array<any>) => {
     let resolve = data.map((item) => item[keyFilter])
-    console.log(resolve)
+    // console.log(resolve)
     // let resolve = data2.map((item) => SwitchAnalysis(keyFilter,item[keyFilter]))
     resolveFinalData(resolve)
   }
