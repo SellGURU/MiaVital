@@ -121,9 +121,11 @@ const Main = () => {
                     </div>
                 </div>             
                 <div className="w-full flex flex-col justify-center mt-[56px]">
-                    <TrendsChart/>
+                    <div className="w-full -ms-4">
+                        <TrendsChart/>
+                    </div>
                     <div className="title mb-6 font-medium">Overview</div>
-                    <div className="grid grid-cols-2 grid-flow-row gap-4 ">
+                    <div className="grid lg:grid-cols-2 grid-flow-row gap-4 ">
                     <div className="border rounded-lg p-6 bg-white">
                         Heart Rate
                         <MixBarChart/>
@@ -141,10 +143,10 @@ const Main = () => {
                         <MixBarChart/>
                     </div>
                     </div>
-                    <div className="grid grid-cols-3 grid-flow-row gap-4 mt-4 mb-[40px]">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 mt-4 mb-[40px]">
                     <div className="border rounded-lg p-6 bg-white">
                         SPO2
-                        <div className="flex flex-row justify-between items-center">
+                        <div className="flex flex-row justify-evenly lg:justify-between items-center">
                         <div className="flex flex-col items-start justify-start gap-4">
                             <div className="flex flex-row items-center gap-2 cursor-pointer">
                             <div className="w-2 h-2 bg-[#48C3B5] rounded-full"></div>

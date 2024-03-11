@@ -117,9 +117,9 @@ const TrendsChart: React.FC = () => {
       <LineChart
         data={data}
         margin={{
-          top: 40,
-          right: 50,
-          left: 50,
+          top: 0,
+          right: 5,
+          left: 0,
           bottom: 0,
         }}
       >
