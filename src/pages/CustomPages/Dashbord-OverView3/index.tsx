@@ -8,11 +8,11 @@ import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
 import citydata from "@/assets/json/city.json"
-import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
 import Table from "@/components/Table";
+import PieChartData from "@/components/PieChartData";
 
 function Main() {
   const mapRef = createRef<LeafletElement>();
@@ -28,45 +28,41 @@ function Main() {
   const nextImportantNotes = () => {
     importantNotesRef.current?.tns.goTo("next");
   };
-  const resolveFilterRate = (filterItem:filterProps,item:any) => {
-    switch(filterItem.item) {
-      case 'spo2':
-        if(Number(item[filterItem.item]) >= 95) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
-          return 'Midrate'
-        }
-        return 'Low'
-      case 'respirationRate':
-        if(Number(item[filterItem.item]) >= 20) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 12 && Number(item[filterItem.item]) < 20){
-          return 'Midrate'
-        }
-        return 'Low'     
-      case 'bloodPressure':
-        if(Number(item[filterItem.item]) >= 120) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
-          return 'Midrate'
-        }
-        return 'Low'               
-      default : return item[filterItem.item]
-    }
-  }
+  // const resolveFilterRate = (filterItem:filterProps,item:any) => {
+  //   switch(filterItem.item) {
+  //     case 'spo2':
+  //       if(Number(item[filterItem.item]) >= 95) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 95){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'
+  //     case 'respirationRate':
+  //       if(Number(item[filterItem.item]) >= 20) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 12 && Number(item[filterItem.item]) < 20){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'     
+  //     case 'bloodPressure':
+  //       if(Number(item[filterItem.item]) >= 120) {
+  //         return 'High'
+  //       }
+  //       if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
+  //         return 'Midrate'
+  //       }
+  //       return 'Low'               
+  //     default : return item[filterItem.item]
+  //   }
+  // }
   const filterdItems =() => {
       const filter1 = location.filter((item) => {
         if(filters.length == 0) {
           return item
         }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
+        let maps = filters
         if(maps.length == filters.length){
           return item
         }
@@ -84,19 +80,7 @@ function Main() {
       }
   }
   const filterdItems2 =() => {
-      const filter1 = citydata.filter((item) => {
-        if(filters.length == 0) {
-          return item
-        }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
-        if(maps.length == filters.length){
-          return item
-        }
-      })
+      const filter1 = citydata
       if(boundsFilter){
         const filterd = filter1.filter((ite) => {
           return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
@@ -110,19 +94,7 @@ function Main() {
       }
   }  
   const filterdItemsWithoutBounds =() => {
-      const filter1 = citydata.filter((item) => {
-        if(filters.length == 0) {
-          return item
-        }
-        let maps = filters.filter(fil => {
-          if(resolveFilterRate(fil,item) == fil.value){
-            return fil
-          }
-        })
-        if(maps.length == filters.length){
-          return item
-        }
-      })
+      const filter1 = citydata
       return filter1
   }
   const [filters,setFilters] = useState<Array<filterProps>>([])
@@ -146,7 +118,7 @@ function Main() {
   return (
     <div className="w-full">
         <div className="my-6 w-full">
-            <FilterBox filters={filters} setFilters={setFilters}></FilterBox>
+            {/* <FilterBox filters={filters} setFilters={setFilters}></FilterBox> */}
 
         </div>
         <div className="w-full flex justify-center">
@@ -197,8 +169,8 @@ function Main() {
                   <div className="">{uper} 90</div>
                 </div>      
               </div>
-              
-              <PieChartCustomized keyFilter="SPO2" filterdData={filterdItems2}/>
+              <PieChartData keyFilter="spo2" filterdData={filterdItems2}></PieChartData>
+              {/* <PieChartCustomized keyFilter="SPO2" filterdData={filterdItems2}/> */}
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -219,7 +191,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/>
+              {/* <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/> */}
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -244,13 +216,13 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/>
+              {/* <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/> */}
             </div>
           </div>         
         </div>  
-        <Table applyFilters={filterdItems2} filterBox={filters}></Table>  
+        {/* <Table applyFilters={filterdItems2} filterBox={filters}></Table>   */}
         {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
-        </div>    
+      </div>    
 
       </div>
   );

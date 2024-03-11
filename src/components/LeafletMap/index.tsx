@@ -40,7 +40,7 @@ function Main(props: MainProps) {
     const mapInstance =await initializeMap({
       config: {
         center:[12.97194, 77.59369],
-        zoom: 13,
+        zoom: 9,
       },
     });
 
@@ -104,7 +104,7 @@ function Main(props: MainProps) {
       });
 
       map.addLayer(markers);
-      subscribe('mapChange',() => {
+      subscribe('mapfilter',() => {
         markers.clearLayers()
         props.applyFilters().map(function (markerElem:any) {
           const marker = leaflet.marker(
@@ -121,6 +121,56 @@ function Main(props: MainProps) {
               }),
             }
           );
+          marker.bindPopup("",{
+            minWidth:200
+          }).setPopupContent(`
+            <div class="p-2 w-full">
+              <div class="flex w-full items-center justify-between">
+                <div class="text-[12px] text-[#475569]">
+                  Blood Pressure
+                </div>
+                <div class="text-[12px] text-[#475569]">
+                  ${markerElem.SBPbloodPressure.toFixed(0)+'/'+markerElem.DBPbloodPressure.toFixed(0)}
+                </div>
+              </div>
+
+              <div class="flex w-full mt-2 items-center justify-between">
+                <div class="text-[12px] text-[#475569]">
+                  Heart Rate
+                </div>
+                <div class="text-[12px] text-[#475569]">
+                  ${markerElem.heartRate.toFixed(2)}
+                </div>
+              </div>    
+              
+              <div class="flex w-full mt-2 items-center justify-between">
+                <div class="text-[12px] text-[#475569]">
+                  SPO2
+                </div>
+                <div class="text-[12px] text-[#475569]">
+                  ${markerElem.spo2.toFixed(2)}
+                </div>
+              </div>  
+
+              <div class="flex w-full mt-2 items-center justify-between">
+                <div class="text-[12px] text-[#475569]">
+                  Temperature
+                </div>
+                <div class="text-[12px] text-[#475569]">
+                  ${markerElem.temperature.toFixed(2)}
+                </div>
+              </div>    
+              
+              <div class="flex w-full mt-2 items-center justify-between">
+                <div class="text-[12px] text-[#475569]">
+                  Respiration Rate
+                </div>
+                <div class="text-[12px] text-[#475569]">
+                  ${markerElem.respirationRate.toFixed(2)}
+                </div>
+              </div>              
+            </div>
+          `).openPopup();            
           markers.addLayer(marker);
         });          
       })
@@ -163,6 +213,65 @@ function Main(props: MainProps) {
             }),
           }
         );
+        marker.bindPopup("",{
+          minWidth:200
+        }).setPopupContent(`
+          <div class="p-2 w-full">
+            <div class="flex w-full items-center justify-between">
+              <div class="text-[12px] text-[#475569]">
+                Number of Members <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
+              </div>
+              <div class="text-[12px] text-gray-800">
+                ${markerElem.membersLength}
+              </div>
+            </div>
+
+            <div class="flex w-full items-center mt-2 justify-between">
+              <div class="text-[12px] text-[#475569]">
+                Blood Pressure <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
+              </div>
+              <div class="text-[12px] text-red-500">
+                ${markerElem.SBPbloodPressure.toFixed(0)+'/'+markerElem.DBPbloodPressure.toFixed(0)}
+              </div>
+            </div>
+
+            <div class="flex w-full mt-2 items-center justify-between">
+              <div class="text-[12px] text-[#475569]">
+                Heart Rate <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
+              </div>
+              <div class="text-[12px] text-green-500">
+                ${markerElem.heartRate.toFixed(2)}
+              </div>
+            </div>    
+            
+            <div class="flex w-full mt-2 items-center justify-between">
+              <div class="text-[12px] text-[#475569]">
+                SPO2 <span class="text-[#374151] text-[10px] opacity-50 ">(AVG)</span>
+              </div>
+              <div class="text-[12px] text-green-500">
+                ${markerElem.spo2.toFixed(2)}
+              </div>
+            </div>  
+
+            <div class="flex w-full mt-2 items-center justify-between">
+              <div class="text-[12px] text-[#475569]">
+                Temperature<span class="text-[#374151] text-[10px] opacity-50 "> (AVG)</span>
+              </div>
+              <div class="text-[12px] text-green-500">
+                ${markerElem.temperature.toFixed(2)}
+              </div>
+            </div>    
+            
+            <div class="flex w-full mt-2 items-center justify-between">
+              <div class="text-[12px] text-[#475569]">
+                Respiration Rate<span class="text-[#374151] opacity-50 text-[10px] "> (AVG)</span>
+              </div>
+              <div class="text-[12px] text-orange-400">
+                ${markerElem.respirationRate.toFixed(2)}
+              </div>
+            </div>              
+          </div>
+        `).openPopup();        
         markers.addLayer(marker);
       });
       // map.addEventListener('mouseup',(e) => {

@@ -1,29 +1,17 @@
-import { Sop2Analysis, SwitchAnalysis } from '@/utils/analysis';
 import { subscribe } from '@/utils/event';
+import { useConstructor } from '@/utils/helper';
 import { describe, it } from 'node:test';
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-interface DataItem {
-  name: string;
-  value: number;
-}
-
-const data: DataItem[] = [
-  { name: 'Group A', value: 13 },
-  { name: 'Group B', value: 12 },
-  { name: 'Group C', value: 62 },
-  { name: 'Group D', value: 13 },
-];
-
 const COLORS = ['#48C3B5', '#FF3E5D','#6432C9', '#FFBE13'];
 const COLORSGender = ['#6432C9', '#FF3E5D', '#FFBE13'];
 const COLORSAge = ['#6432C9','#48C3B5', '#FF3E5D', '#FFBE13'];
-const resolveColorPlate = (panel:keyof CityData) => {
+const resolveColorPlate = (panel:keyof humanData) => {
   if(panel == 'gender') {
     return COLORSGender
   }
-  if(panel == 'AgeGroup'){
+  if(panel == 'age'){
     return COLORSAge
   }
   return COLORS
@@ -56,42 +44,46 @@ const renderCustomizedLabel = ({
   );
 };
 
-interface PieChartCustomized {
+interface PieChartData{
   filterdData :() => Array<any>
-  keyFilter: keyof CityData
+  keyFilter: keyof humanData
 }
-const PieChartCustomized: React.FC<PieChartCustomized> = ({filterdData,keyFilter}) => {
+const PieChartData: React.FC<PieChartData> = ({filterdData,keyFilter}) => {
   // const [data2,setData2] = useState(filterdData())
-  // const dataMap = filterdData().map((item) => Sop2Analysis(item.SPO2))
+  const dataMap = filterdData().map((item) => item[keyFilter])
   const resolveFinalData = (resolve:Array<any>) => {
-    if(keyFilter == 'SPO2'){
-      setresolveDatafinal([
-       { name: '<= 50', value: resolve.filter((item) => item == '<= 50').length},
-       { name: '50 - 70', value: resolve.filter((item) => item == '50 - 70').length },
-       { name: '70 - 90', value: resolve.filter((item) => item == '70 - 90').length},
-       { name: '>= 90', value: resolve.filter((item) => item == '>= 90').length},
-    ])
-    }
+    if(keyFilter == 'spo2'){
+        setresolveDatafinal([
+        { name: '<= 50', value: resolve.filter((item) => item <= 50).length},
+        { name: '50 - 70', value: resolve.filter((item) => item > 50 && item <= 70).length },
+        { name: '70 - 90', value: resolve.filter((item) => item > 70 && item <= 90).length},
+        { name: '>= 90', value: resolve.filter((item) => item >= 90).length},
+        ])
+    }  
     if(keyFilter == 'gender'){
       setresolveDatafinal([
-       { name: 'Male', value: resolve.reduce((sum,{Male}) => sum+ Male,0)},
-       { name: 'Female', value: resolve.reduce((sum,{Female}) => sum+ Female,0)},
-       { name: 'Other', value: resolve.reduce((sum,{Other}) => sum+ Other,0)}
-    ])      
+       { name: 'Male', value: resolve.filter((item) =>item == 'Male').length},
+       { name: 'Female', value: resolve.filter((item) =>item == 'Female').length},
+       { name: 'Other', value:resolve.filter((item) =>item == 'Other').length}
+    ])            
     }
-    if(keyFilter == 'AgeGroup'){
+    if(keyFilter == 'age'){
       setresolveDatafinal([
-       { name: '<= 18', value: resolve.reduce((sum,item:ageType) => sum+ item['<= 18'],0)},
-       { name: '18 - 35', value: resolve.reduce((sum,item:ageType) => sum+ item['18-35'],0)},
-       { name: '35 - 75', value:  resolve.reduce((sum,item:ageType) => sum+ item['35-75'],0)},
-       { name: '>= 75', value: resolve.reduce((sum,item:ageType) => sum+ item['>= 75'],0)}
-    ])      
+       { name: '<= 18', value: resolve.filter((item) =>item <= 18).length},
+       { name: '18 - 35', value: resolve.filter((item) =>item > 18 && item <= 35).length},
+       { name: '35 - 75', value: resolve.filter((item) =>item > 35 && item <= 75).length},
+       { name: '>= 75', value:resolve.filter((item) =>item >= 75).length}
+    ])            
     }    
   }
   const [resolveDatafinal,setresolveDatafinal] = useState<Array<any>>([])
-  // resolveFinalData(dataMap)
-  const resolveDataChart = (data2:Array<any>) => {
-    let resolve = data2.map((item) => SwitchAnalysis(keyFilter,item[keyFilter]))
+  useConstructor(() => {
+    resolveFinalData(dataMap)
+  })
+  const resolveDataChart = (data:Array<any>) => {
+    let resolve = data.map((item) => item[keyFilter])
+    console.log(resolve)
+    // let resolve = data2.map((item) => SwitchAnalysis(keyFilter,item[keyFilter]))
     resolveFinalData(resolve)
   }
   // const resolveMasklayer = (item:number) => {
@@ -119,7 +111,7 @@ const PieChartCustomized: React.FC<PieChartCustomized> = ({filterdData,keyFilter
           fill="#8884d8"
           dataKey="value"
         >
-          {data.map((entry, index) => (
+          {resolveDatafinal.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={resolveColorPlate(keyFilter)[index % resolveColorPlate(keyFilter).length]} />
           ))}
         </Pie>
@@ -128,4 +120,4 @@ const PieChartCustomized: React.FC<PieChartCustomized> = ({filterdData,keyFilter
   );
 };
 
-export default PieChartCustomized;
+export default PieChartData;

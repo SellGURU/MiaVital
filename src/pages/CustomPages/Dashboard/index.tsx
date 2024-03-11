@@ -7,7 +7,6 @@ import FilterBox from "@/components/FilterBox";
 import EnhancedTable from "@/components/EnhancedTable";
 import location from "@/assets/json/location.json";
 import MixBarChart from "@/components/MixBarChart";
-import PieChartCustomized from "@/components/PieChartCustomized";
 import TrendsChart from "@/components/TrendsChart";
 
 function Main() {

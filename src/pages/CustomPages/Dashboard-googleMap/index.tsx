@@ -7,7 +7,7 @@ import EnhancedTable from "@/components/EnhancedTable";
 import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
 import location from "@/assets/json/location.json";
-import PieChartCustomized from "@/components/PieChartCustomized";
+// import PieChartCustomized from "@/components/PieChartCustomized";
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
@@ -66,14 +66,7 @@ function Main() {
           return 'Midrate'
         }
         return 'Low'     
-      case 'bloodPressure':
-        if(Number(item[filterItem.item]) >= 120) {
-          return 'High'
-        }
-        if(Number(item[filterItem.item]) >= 90 && Number(item[filterItem.item]) < 120){
-          return 'Midrate'
-        }
-        return 'Low'               
+              
       default : return item[filterItem.item]
     }
   }
@@ -191,7 +184,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div>    
           <div className="border rounded-lg p-6 bg-white">
@@ -212,7 +205,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div> 
           <div className="border rounded-lg p-6 bg-white">
@@ -237,7 +230,7 @@ function Main() {
                 </div>      
               </div>
               
-              <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/>
+              {/* <PieChartCustomized  keyFilter="SPO2" filterdData={filterdItems}/> */}
             </div>
           </div>         
         </div>    

@@ -37,7 +37,7 @@ type DotNestedKeys<T> = (
 
 
 type filterProps = {
-    item:'id'|'name'|'memberId'|'riskCategory'|'riskLevel'|'heartRate'|'bloodPressure'|'temperature'|'respirationRate'| 'spo2' | 'gender' | 'age'
+    item:keyof humanData
     value:string
 }
 // "CityName":"Basavanagudi","HeartRate":54,"BloodPressure":"113/62","Temperature":36.9,"RespirationRate":17,"SPO2":88
@@ -55,18 +55,44 @@ type ageType = {
 }
 
 type CityData = {
-  id:string,
-  CityName:string,
-  HeartRate:number,
-  BloodPressure:string,
-  Temperature:number,
-  RespirationRate:number,
-  SPO2:number,
-  latitude:number,
-  longitude:number,
-  gender:genderType
-  AgeGroup:ageType
+  id:string
+  name:string
+  spo2:number
+  riskLevel:string
+  heartRate:number,
+  DBPbloodPressure:number
+  SBPbloodPressure:number
+  temperature:number
+  respirationRate:number
+  latitude:string
+  longitude:string
+  membersLength:number
 }
 
+type humanData = {
+  name:string
+  spo2:number
+  age:number
+  riskLevel:string
+  heartRate:number,
+  DBPbloodPressure:number
+  SBPbloodPressure:number
+  temperature:number
+  respirationRate:number
+  latitude:string
+  longitude:string
+  gender:'Female'|'Male'|"Other"
+}
+                // "name": item[1][0].city,
+                // "riskLevel": item[1].map(el =>el.riskLevel).sort((a,b) => item[1].filter((el) =>el.riskLevel == a).length - item[1].filter((el) =>el.riskLevel == b).length).pop(),
+                // "heartRate": item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length,
+                // "DBPbloodPressure": item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length,
+                // "SBPbloodPressure": item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length,
+                // "temperature": item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length,
+                // "respirationRate": item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length,
+                // "spo2": item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length,
+                // "latitude": item[1][0].latitude,
+                // "longitude": item[1][0].longitude,
+                // "city": item[1][0].city,   
 // "gender":{"Male":600,"Female":520,"Other":30}
 // "latitude":12.9716,"longitude":77.5946
