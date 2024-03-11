@@ -85,6 +85,19 @@ const Main = () => {
       })        
       return filterlayer
     }
+    const filterHumanDataWithBounds = () => {
+        if(boundsFilter){
+            const filterd = filterHumanData().filter((ite) => {
+            return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
+                    Number(ite.latitude) < boundsFilter.current.northE.lat &&
+                    Number(ite.longitude) < boundsFilter.current.northE.lng &&
+                    Number(ite.longitude) > boundsFilter.current.southW.lng
+            })
+            return filterd
+        }  else{
+            return filterHumanData()
+        }            
+    }
     useEffect(() => {
         if(mapRef.current){
             // console.log(mapRef.current?.map.getBounds())
@@ -166,7 +179,7 @@ const Main = () => {
                             </div>      
                         </div>
                         
-                        <PieChartData keyFilter="spo2" filterdData={filterHumanData}/>
+                        <PieChartData keyFilter="spo2" filterdData={filterHumanDataWithBounds}/>
                         </div>
                     </div>    
                     <div className="border rounded-lg p-6 bg-white">
@@ -186,7 +199,7 @@ const Main = () => {
                             <div className="">Others</div>
                             </div>      
                         </div>
-                        <PieChartData keyFilter="gender" filterdData={filterHumanData}/>
+                        <PieChartData keyFilter="gender" filterdData={filterHumanDataWithBounds}/>
                         {/* <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/> */}
                         </div>
                     </div> 
@@ -211,7 +224,7 @@ const Main = () => {
                             <div className="">{uper} 75</div>
                             </div>      
                         </div>
-                         <PieChartData keyFilter="age" filterdData={filterHumanData}/>
+                         <PieChartData keyFilter="age" filterdData={filterHumanDataWithBounds}/>
                         {/* <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/> */}
                         </div>
                     </div>         
