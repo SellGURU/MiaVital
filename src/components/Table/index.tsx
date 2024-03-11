@@ -93,7 +93,7 @@ const headCells: readonly HeadCell[] = [
   },
   {
     id: 'DBPbloodPressure',
-    numeric: false,
+    numeric: true,
     disablePadding: true,
     label: 'Blood Pressure',
   },

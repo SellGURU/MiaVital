@@ -13,8 +13,8 @@ import TrendsChart from "@/components/TrendsChart";
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
     const boundsFilter = useRef({
-        northE:new LatLng(13.00623032604816,77.69445419311525),
-        southW: new LatLng(12.937645284624287,77.49292373657228)        
+        northE:new LatLng(13.520508153934646,79.26361083984376),
+        southW: new LatLng(12.42316552500995,75.92651367187501)        
     })
     const filterdData = () => {
         const result = _.groupBy(MainData,'city')
@@ -83,6 +83,7 @@ const Main = () => {
     }
     useEffect(() => {
         if(mapRef.current){
+            console.log(mapRef.current?.map.getBounds())
         mapRef.current.map.addEventListener('mouseup',() => {
             boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng

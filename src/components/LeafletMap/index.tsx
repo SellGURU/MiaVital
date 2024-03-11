@@ -40,7 +40,7 @@ function Main(props: MainProps) {
     const mapInstance =await initializeMap({
       config: {
         center:[12.97194, 77.59369],
-        zoom: 13,
+        zoom: 9,
       },
     });
 
