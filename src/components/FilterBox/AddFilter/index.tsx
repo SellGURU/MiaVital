@@ -99,6 +99,18 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
             list:['30','31','32','33','34','35','36','37','38','39','40']
         }, 
         {
+            name:"DBP Blood Pressure",
+            keyItem:'DBPbloodPressure',
+            mode:'minMax',
+            list:['60','70','80','90','100','110','120']
+        },  
+        {
+            name:"SBP Blood Pressure",
+            keyItem:'SBPbloodPressure',
+            mode:'minMax',
+            list:['100','110','120','130','140','150','160','170','180']
+        },                 
+        {
             name:"Respiration Rate",
             keyItem:'respirationRate',
             mode:'minMax',
@@ -135,7 +147,31 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                    <div className="mx-2">:</div>
                    <div>
                     {
-                        filtersBox.filter((item) => item.keyItem == categoryfilter)[0]?.mode == 'list'?
+                        filtersBox.filter((item) => item.keyItem == categoryfilter)[0]?.mode == 'minMax'?
+                 
+                            <div className="flex ">
+                                <FormSelect value={minimum} onChange={(e) => {
+                                    setMinimum(e.target.value)
+                                }} formSelectSize="sm" className="w-[130px] mr-2">
+                                    <option className="hidden" value="" disabled selected>Minimum</option>
+                                    {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list?.map((item) => {
+                                        return (
+                                            <option value={item}>{item}</option>
+                                        )
+                                    })}                                
+                                </FormSelect>
+                                <FormSelect  value={maximum} onChange={(e) => {
+                                    setMaximum(e.target.value)
+                                }}  formSelectSize="sm" className="w-[130px] mr-2">
+                                    <option className="hidden" value="" disabled selected>Maximum</option>
+                                    {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.filter((item) => Number(item) > Number(minimum)).map((item) => {
+                                        return (
+                                            <option value={item}>{item}</option>
+                                        )
+                                    })}                               
+                                </FormSelect>                                
+                            </div>
+                        :
                             <FormSelect value={lavelFilter} onChange={(e) => {
                                 setLevelFilter(e.target.value)
                             }} formSelectSize="sm" className="w-[144px]">
@@ -148,30 +184,7 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                                 {/* <option>Low</option>
                                 <option>Moderate</option>
                                 <option>High</option> */}
-                            </FormSelect>                    
-                        :
-                        <div className="flex ">
-                            <FormSelect value={minimum} onChange={(e) => {
-                                setMinimum(e.target.value)
-                            }} formSelectSize="sm" className="w-[130px] mr-2">
-                                <option className="hidden" value="" disabled selected>Minimum</option>
-                                {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list?.map((item) => {
-                                    return (
-                                        <option value={item}>{item}</option>
-                                    )
-                                })}                                
-                            </FormSelect>
-                            <FormSelect  value={maximum} onChange={(e) => {
-                                setMaximum(e.target.value)
-                            }}  formSelectSize="sm" className="w-[130px] mr-2">
-                                <option className="hidden" value="" disabled selected>Maximum</option>
-                                {filtersBox.filter((item) =>item.keyItem == categoryfilter)[0]?.list.filter((item) => Number(item) > Number(minimum)).map((item) => {
-                                    return (
-                                        <option value={item}>{item}</option>
-                                    )
-                                })}                               
-                            </FormSelect>                                
-                        </div>
+                            </FormSelect>                           
                     }
                    </div>                   
                     <div className="flex gap-1 items-center">

@@ -113,25 +113,31 @@ interface filterProps {
 
 const TrendsChart: React.FC = () => {  
   return(
-    <ResponsiveContainer width="100%" height={350}>
-      <LineChart
-        data={data}
-        margin={{
-          top: 0,
-          right: 5,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" angle={0} />
-        <YAxis strokeWidth={0} axisLine={false} />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="Risk" stroke="#FF3E5D" activeDot={{ r: 8 }} strokeWidth={2}/>
-        <Line type="monotone" dataKey="Suspected" stroke="#B1B1B9" strokeDasharray="3 3" strokeWidth={2} />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className='border w-full pr-4 pt-5 pb-3 rounded-[8px]'>
+      <div className='mb-2 flex justify-between'>
+        <div className='ml-4  font-bold'>Trends</div>
+      </div>
+      <ResponsiveContainer width="100%" height={350}>
+        <LineChart
+          data={data}
+          margin={{
+            top: 0,
+            right: 5,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <Legend verticalAlign='top' className='mb-2' align='right' focusable  margin={{top: 0, left: 0, right: 0, bottom: 0}} />
+          <CartesianGrid   strokeDasharray="1 3" vertical={false} />
+          <XAxis dataKey="name" angle={0} />
+          <YAxis strokeWidth={0} axisLine={false} />
+          <Tooltip />
+          <Line type="monotone" dataKey="Risk" stroke="#FF3E5D" activeDot={{ r: 8 }} strokeWidth={2}/>
+          <Line type="monotone" dataKey="Suspected" stroke="#B1B1B9" strokeDasharray="3 3" strokeWidth={2} />
+        </LineChart>
+      </ResponsiveContainer>
+
+    </div>
 
   )
 }

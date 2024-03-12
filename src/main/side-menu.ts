@@ -4,29 +4,19 @@ const menu: Array<Menu | "divider"> = [
   {
     icon: "Home",
     title: "Dashboard",
-    pathname:"/"
-    // subMenu: [
-    //   // {
-    //   //   icon: "Activity",
-    //   //   pathname: "/",
-    //   //   title: "Overview 1",
-    //   // },
-    //   // {
-    //   //   icon: "Activity",
-    //   //   pathname: "/dashboard-overview-2",
-    //   //   title: "Overview 2",
-    //   // },
-    //   // {
-    //   //   icon: "Activity",
-    //   //   pathname: "/dashboard-overview-3",
-    //   //   title: "Overview 3",
-    //   // },
-    //   // {
-    //   //   icon: "Activity",
-    //   //   pathname: "/dashboard-overview-4",
-    //   //   title: "Overview 4",
-    //   // },
-    // ],
+    // pathname: "/",
+    subMenu: [
+      {
+        icon: "Activity",
+        pathname: "/",
+        title: "India",
+      },
+      {
+        icon: "Activity",
+        pathname: "/OverView-usa",
+        title: "Usa",
+      }
+    ],
   },
   // {
   //   icon: "ShoppingBag",

@@ -220,6 +220,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         <Typography
           sx={{ flex: '1 1 100%' }}
           variant="h6"
+          fontSize={18}
           id="tableTitle"
           component="div"
         >
