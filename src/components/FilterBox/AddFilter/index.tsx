@@ -23,30 +23,47 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
     const addFilter = () => {
         const myfilters = filters
         if(categoryfilter != '') {
-            if(myfilters.map((val) => val.item).includes(categoryfilter)){
-                myfilters[myfilters.findIndex((item) => item.item == categoryfilter)].value = lavelFilter 
-                setFilters([...myfilters])
-            }else if(filtersBox.filter((item) => item.keyItem == categoryfilter)[0].mode == 'list'){
-                setFilters([...filters,{
-                    item:categoryfilter,
-                    value:lavelFilter,
-                    mode:'equal'          
-                }])
+            if(filtersBox.filter((item) => item.keyItem == categoryfilter)[0].mode == 'list'){
+                if(lavelFilter != ''){
+                    if(myfilters.map((val) => val.item).includes(categoryfilter)){
+                        myfilters[myfilters.findIndex((item) => item.item == categoryfilter)].value = lavelFilter 
+                        setFilters([...myfilters])                    
+                    }else{
+                        setFilters([...filters,{
+                            item:categoryfilter,
+                            value:lavelFilter,
+                            mode:'equal'          
+                        }])                    
+                    }
+                }
             }else if(filtersBox.filter((item) => item.keyItem == categoryfilter)[0].mode == 'minMax'){
-                setFilters([...filters,
-                    {
-                    item:categoryfilter,
-                    value:minimum,
-                    mode:'min'          
-                    },
-                    {
-                    item:categoryfilter,
-                    value:maximum,
-                    mode:'max'          
-                    },                    
-                ])                                
+                const newArray =filters
+                if(minimum != ''){
+                    if(myfilters.filter((item) => item.item ==categoryfilter && item.mode == 'min').length > 0){
+                        myfilters[myfilters.findIndex((item) => item.item == categoryfilter && item.mode == 'min')].value = minimum 
+                        setFilters([...myfilters])                           
+                    }else {
+                        newArray.push({
+                            item:categoryfilter,
+                            value:minimum,
+                            mode:'min'                            
+                        })                        
+                    }
+                }
+                if(maximum != ''){
+                    if(myfilters.filter((item) => item.item ==categoryfilter && item.mode == 'max').length >0){
+                        myfilters[myfilters.findIndex((item) => item.item == categoryfilter && item.mode == 'max')].value = maximum 
+                        setFilters([...myfilters])                           
+                    }else {
+                        newArray.push({
+                            item:categoryfilter,
+                            value:maximum,
+                            mode:'max'                            
+                        })                        
+                    }
+                }  
+                setFilters([...newArray])                  
             }
-
         }
         // let filters = 
     }
@@ -80,7 +97,19 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
             keyItem:'temperature',
             mode:'minMax',
             list:['30','31','32','33','34','35','36','37','38','39','40']
-        },                                       
+        }, 
+        {
+            name:"Respiration Rate",
+            keyItem:'respirationRate',
+            mode:'minMax',
+            list:['10','20','30']
+        },       
+        {
+            name:"Age",
+            keyItem:'age',
+            mode:'minMax',
+            list:['0','10','18','25','30','35','45','55','65','75','85','95','100']
+        },                                                    
     ]
     return (
         <>
