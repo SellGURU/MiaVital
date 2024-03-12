@@ -14,7 +14,7 @@ const menu: Array<Menu | "divider"> = [
       {
         icon: "Activity",
         pathname: "/OverView-usa",
-        title: "Usa",
+        title: "USA",
       }
     ],
   },

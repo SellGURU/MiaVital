@@ -71,17 +71,23 @@ type CityData = {
 }
 
 type humanData = {
+  id:string
   name:string
-  spo2:number
-  age:number
+  spo2:string
+  age:string
   riskLevel:string
-  heartRate:number,
-  DBPbloodPressure:number
-  SBPbloodPressure:number
-  temperature:number
-  respirationRate:number
+  heartRate:string,
+  DBPbloodPressure:string
+  SBPbloodPressure:string
+  temperature:string
+  city:string
+  respirationRate:string
   latitude:string
   longitude:string
+  bloodGlucose:string
+  HbA1c:string
+  BMI:string
+  memberId:string
   gender:'Female'|'Male'|"Other"
 }
                 // "name": item[1][0].city,

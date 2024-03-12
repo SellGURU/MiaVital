@@ -14,10 +14,14 @@ const menu: Array<Menu | "divider"> = [
       {
         icon: "Activity",
         pathname: "/OverView-usa",
-        title: "Usa",
+        title: "USA",
       }
     ],
   },
+  {
+    icon:'TrendingUp',
+    title:'Member Risk Status'
+  }
   // {
   //   icon: "ShoppingBag",
   //   title: "E-Commerce",

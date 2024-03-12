@@ -1,6 +1,6 @@
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import LeafletMap from "@/components/LeafletMap"
-import { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import MainData from '@/assets/json/main.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
@@ -10,6 +10,7 @@ import { publish } from "@/utils/event";
 import { LatLng } from "leaflet";
 import TrendsChart from "@/components/TrendsChart";
 import FilterBox from "@/components/FilterBox";
+import ChartAndTableShowProps from '@/components/chartAndTableShow'
 
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
@@ -17,10 +18,12 @@ const Main = () => {
         northE:new LatLng(13.520508153934646,79.26361083984376),
         southW: new LatLng(12.42316552500995,75.92651367187501)        
     })
+    
     const filterdData = () => {           
         const result = _.groupBy(filterHumanData(),'city')
         
         return Object.entries(result).map((item) => {
+            console.log(item[1].filter((el) => el.city == 'Kolar'))
             return {
                 "id":item[1][0].id,
                 "name": item[1][0].city,
@@ -38,6 +41,7 @@ const Main = () => {
             }
         })
     }
+    
     const filterdDataWithBounds = () => {
         const result = _.groupBy(filterHumanData(),'city')
         let resolve =Object.entries(result).map((item) => {
@@ -70,7 +74,7 @@ const Main = () => {
         }        
     }    
     const filterHumanData =() => {
-      const filterlayer = MainData.filter((item) => {
+      const filterlayer:Array<humanData> = MainData.filter((item) => {
         if(filters.length == 0) {
           return item
         }
@@ -94,7 +98,7 @@ const Main = () => {
         if(maps.length == filters.length){
           return item
         }
-      })        
+      }) as Array<humanData>       
       return filterlayer
     }
     const filterHumanDataWithBounds = () => {
@@ -131,8 +135,7 @@ const Main = () => {
         }
     })    
     const [filters,setFilters] = useState<Array<filterProps>>([])
-    const lower="<=";
-    const uper=">=";    
+ 
     return (
         <>
             <div className="w-full">
@@ -253,98 +256,7 @@ const Main = () => {
                     <div className="w-full">
                         <TrendsChart/>
                     </div>
-                    <div className="title mb-6 mt-6 text-lg font-medium">Overview</div>
-                    <div className="grid lg:grid-cols-2 grid-flow-row gap-4 ">
-                    <div className="border rounded-lg p-6 bg-white">
-                        Heart Rate
-                        <MixBarChart/>
-                    </div>
-                    <div className="border rounded-lg p-6 bg-white">
-                        Blood Pressure
-                        <MixBarChart/>
-                    </div>
-                    <div className="border rounded-lg p-6 bg-white">
-                        Temperature Rate
-                        <MixBarChart/>
-                    </div>
-                    <div className="border rounded-lg p-6 bg-white">
-                        Respiration Rate
-                        <MixBarChart/>
-                    </div>
-                    </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 mt-4 mb-[40px]">
-                    <div className="border rounded-lg p-6 bg-white">
-                        SPO2
-                        <div className="flex flex-row justify-evenly lg:justify-between items-center">
-                        <div className="flex flex-col items-start justify-start gap-4">
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#48C3B5] rounded-full"></div>
-                            <div className="">{lower} 50</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
-                            <div className="">50 - 70</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#6432C9] rounded-full"></div>
-                            <div className="">70 - 90</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
-                            <div className="">{uper} 90</div>
-                            </div>      
-                        </div>
-                        
-                        <PieChartData keyFilter="spo2" filterdData={filterHumanDataWithBounds}/>
-                        </div>
-                    </div>    
-                    <div className="border rounded-lg p-6 bg-white">
-                        Gender
-                        <div className="flex flex-row justify-between items-center">
-                        <div className="flex flex-col items-start justify-start gap-4">
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#236AF2] rounded-full"></div>
-                            <div className="">Male</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
-                            <div className="">Female</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
-                            <div className="">Others</div>
-                            </div>      
-                        </div>
-                        <PieChartData keyFilter="gender" filterdData={filterHumanDataWithBounds}/>
-                        {/* <PieChartCustomized  keyFilter="gender" filterdData={filterdItems2}/> */}
-                        </div>
-                    </div> 
-                    <div className="border rounded-lg p-6 bg-white">
-                        Age
-                        <div className="flex flex-row justify-between items-center">
-                        <div className="flex flex-col items-start justify-start gap-4 ">
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#6432C9] rounded-full"></div>
-                            <div className="">{lower} 18</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#48C3B5] rounded-full"></div>
-                            <div className="">18 - 35</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FF3E5D] rounded-full"></div>
-                            <div className="">35 - 75</div>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 cursor-pointer">
-                            <div className="w-2 h-2 bg-[#FFBA52] rounded-full"></div>
-                            <div className="">{uper} 75</div>
-                            </div>      
-                        </div>
-                         <PieChartData keyFilter="age" filterdData={filterHumanDataWithBounds}/>
-                        {/* <PieChartCustomized  keyFilter="AgeGroup" filterdData={filterdItems2}/> */}
-                        </div>
-                    </div>         
-                    </div>  
+                    <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
                     <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   

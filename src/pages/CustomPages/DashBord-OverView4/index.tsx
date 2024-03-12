@@ -138,7 +138,7 @@ const Main = () => {
             <div className="w-full">
                 <div className="my-10 w-full text-[#475569] flex flex-col gap-10">
                     <div className="flex flex-wrap gap-4 flex-row justify-start items-center">
-                        <FilterBox showCalender filters={filters} setFilters={setFilters}></FilterBox>
+                        <FilterBox  filters={filters} setFilters={setFilters}></FilterBox>
                     </div>
                 </div> 
                 <div className="w-full mt-5 flex justify-center">
