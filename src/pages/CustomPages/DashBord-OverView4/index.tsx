@@ -1,7 +1,7 @@
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import LeafletMap from "@/components/LeafletMap"
 import { createRef, useEffect, useRef, useState } from "react";
-import MainData from '@/assets/json/main.json';
+import MainData from '@/assets/json/history.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
 import Table from "@/components/Table";
