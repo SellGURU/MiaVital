@@ -1,66 +1,18 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import FilterItem from '../FilterBox/FilterItem';
 
 interface DataItem {
   name: string;
-  uv: number;
-  pv: number;
-  amt: number;
+  Normal: number;
+  Suspected: number;
+  AtRisk: number;
 }
 
-const data: DataItem[] = [
-  {
-    name: '180-200',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '160-180',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: '140-160',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: '120-140',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: '100-120',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: '80-100',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: '60-80',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: '40-60',
-    uv: 2490,
-    pv: 3300,
-    amt: 3100,
-  },
-];
-
-const MixBarChart: React.FC = () => {  
+interface MixBarChartProps {
+  data: DataItem[];
+}
+const MixBarChart: React.FC<MixBarChartProps> = ({ data }) => {  
+  
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
@@ -69,16 +21,17 @@ const MixBarChart: React.FC = () => {
         margin={{
           top: 20,
           bottom: 5,
+
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis type="number" fontSize={12} tick={{ fill: '#9CA3AF' }} />
-        <YAxis dataKey="name" type="category" fontSize={12} tick={{ fill: '#9CA3AF' }} />
+        <CartesianGrid strokeDasharray="3 3" opacity={0.4} />
+        <XAxis type="number" fontSize={12} tick={{ fill: '#9CA3AF' }} ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]} opacity={0.7} />
+        <YAxis dataKey="name" type="category" fontSize={12} tick={{ fill: '#9CA3AF' }} opacity={0.7}/>
         <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" stackId="a" fill="#FF3E5D" barSize={12} /> 
-        <Bar dataKey="amt" stackId="a" fill="#FFBE13" barSize={12} /> 
-        <Bar dataKey="uv" stackId="a" fill="#48C3B5" barSize={12} /> 
+        {/* <Legend /> */}
+        <Bar dataKey="Normal" stackId="a" fill="#48C3B5" barSize={12} radius={[0,3,3,0]}  /> 
+        <Bar dataKey="Suspected" stackId="a" fill="#FFBE13" barSize={12} radius={[0,3,3,0]}  /> 
+        <Bar dataKey="AtRisk" stackId="a" fill="#FF3E5D" barSize={12} radius={[0,3,3,0]}  /> 
       </BarChart>
     </ResponsiveContainer>
   );
