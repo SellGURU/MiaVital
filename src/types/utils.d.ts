@@ -88,6 +88,18 @@ type humanData = {
   HbA1c:string
   BMI:string
   memberId:string
+  pregnancy:string
+  hypertension:string
+  CHF:string
+  COPD:string
+  stroke:string
+  mentalHealth:string
+  arrhythmia:string
+  neurologicalDisorders:string
+  diabetes:string
+  sleepDisorders:string
+  chronicPain:string
+  obesity:string
   gender:'Female'|'Male'|"Other"
 }
                 // "name": item[1][0].city,

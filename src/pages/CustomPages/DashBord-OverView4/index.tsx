@@ -10,6 +10,7 @@ import { publish } from "@/utils/event";
 import { LatLng } from "leaflet";
 import TrendsChart from "@/components/TrendsChart";
 import FilterBox from "@/components/FilterBox";
+import StandardTable from "@/components/Table/StandardTable";
 
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
@@ -245,6 +246,8 @@ const Main = () => {
                     <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
+                    {/* <StandardTable mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
+                    <StandardTable mode="member" applyFilters={filterHumanDataWithBounds}></StandardTable> */}
             </div>
         </>
     )
