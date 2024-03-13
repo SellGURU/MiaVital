@@ -38,8 +38,8 @@ type DotNestedKeys<T> = (
 
 type filterProps = {
     item:keyof humanData
-    value:string
-    mode:'equal' | 'min' | 'max'
+    value:string | Array<string>
+    mode:'equal' | 'min' | 'max' |'category'
 }
 // "CityName":"Basavanagudi","HeartRate":54,"BloodPressure":"113/62","Temperature":36.9,"RespirationRate":17,"SPO2":88
 type genderType = {

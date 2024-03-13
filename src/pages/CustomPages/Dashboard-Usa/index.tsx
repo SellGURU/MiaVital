@@ -97,6 +97,11 @@ const Main = () => {
               if(Number(item[fil.item]) < Number(fil.value)){
                 return fil
               }
+          }
+          if(fil.mode == 'category'){
+              if(fil.value.includes(item[fil.item])){
+                return fil
+              }            
           }          
         })
         if(maps.length == filters.length){
@@ -313,11 +318,11 @@ const Main = () => {
                                                 if(filters.filter((el) =>el.item == item.key).length>0){
                                                    setFilters([...filters.filter((el) => el.item != item.key)])
                                                 }else{
-                                                    setFilters([...filters,{
-                                                        item:item.key,
-                                                        mode:'equal',
-                                                        value:'Risk'
-                                                    }])
+                                                   setFilters([...filters,{
+                                                    item:item.key,
+                                                    mode:'category',
+                                                    value:['Risk','Suspect']
+                                                   }])
                                                 }
                                             }} className={`font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg ${filters.filter((el) =>el.item == item.key).length>0?'bg-[#48C3B529]':'bg-white'} cursor-pointer`}>
                                                 <p className="font-medium	">{item.name}</p>
