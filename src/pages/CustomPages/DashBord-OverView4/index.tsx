@@ -144,7 +144,7 @@ const Main = () => {
                 </div> 
                 <div className="w-full mt-5 flex justify-center">
                     <div className="w-full intro-y  ">
-                        <LeafletMap mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+                        <LeafletMap mode="City"  mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
                     </div>
                 </div>             
                 <div className="w-full flex flex-col justify-center mt-[56px]">
@@ -243,7 +243,7 @@ const Main = () => {
                         </div>
                     </div>         
                     </div>  
-                    <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
+                    <Table applyFilters={filterdDataWithBounds} filterBox={filters}></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
                     {/* <StandardTable mode="city" applyFilters={filterdDataWithBounds}></StandardTable>

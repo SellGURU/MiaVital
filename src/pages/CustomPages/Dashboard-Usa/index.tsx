@@ -350,7 +350,7 @@ const Main = () => {
                         <TrendsChart/>
                     </div>
                     <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
-                    <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
+                    <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
             </div>
