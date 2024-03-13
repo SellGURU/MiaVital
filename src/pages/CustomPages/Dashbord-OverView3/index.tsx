@@ -6,8 +6,9 @@ import FilterBox from "@/components/FilterBox";
 import EnhancedTable from "@/components/EnhancedTable";
 import LeafletMap from "@/components/LeafletMap";
 import { LatLng } from "leaflet";
-import location from "@/assets/json/location.json";
-import citydata from "@/assets/json/city.json"
+// import location from "@/assets/json/location.json";
+// import citydata from "@/assets/json/city.json"
+import mainData from '@/assets/json/main.json';
 import MixBarChart from "@/components/MixBarChart";
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import { publish } from "@/utils/event";
@@ -58,7 +59,7 @@ function Main() {
   //   }
   // }
   const filterdItems =() => {
-      const filter1 = location.filter((item) => {
+      const filter1 = mainData.filter((item) => {
         if(filters.length == 0) {
           return item
         }
@@ -80,7 +81,7 @@ function Main() {
       }
   }
   const filterdItems2 =() => {
-      const filter1 = citydata
+      const filter1 = mainData
       if(boundsFilter){
         const filterd = filter1.filter((ite) => {
           return  Number(ite.latitude) > boundsFilter.current.southW.lat && 
@@ -90,11 +91,11 @@ function Main() {
         })
         return filterd
       }  else{
-        return citydata
+        return mainData
       }
   }  
   const filterdItemsWithoutBounds =() => {
-      const filter1 = citydata
+      const filter1 = mainData
       return filter1
   }
   const [filters,setFilters] = useState<Array<filterProps>>([])
@@ -123,7 +124,7 @@ function Main() {
         </div>
         <div className="w-full flex justify-center">
           <div className="p-5 w-full mt-12 intro-y box sm:mt-5">
-            <LeafletMap mapRef={mapRef} applyFilters={filterdItemsWithoutBounds} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+            <LeafletMap mode="Member" mapRef={mapRef} applyFilters={filterdItemsWithoutBounds} className="h-[410px] mt-5 rounded-md bg-slate-200" />
           </div>
         </div>
       <div className="w-full flex flex-col justify-center mt-[56px]">

@@ -2,6 +2,7 @@ import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-l
 import LeafletMap from "@/components/LeafletMap"
 import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import MainData from '@/assets/json/main.json';
+import HistoryData from '@/assets/json/history.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
 import Table from "@/components/Table";
@@ -11,7 +12,10 @@ import { LatLng } from "leaflet";
 import TrendsChart from "@/components/TrendsChart";
 import FilterBox from "@/components/FilterBox";
 import ChartAndTableShowProps from '@/components/chartAndTableShow'
-
+type riskPanelType = {
+    name:string,
+    key:keyof humanData
+}
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
     const boundsFilter = useRef({
@@ -74,7 +78,7 @@ const Main = () => {
         }        
     }    
     const filterHumanData =() => {
-      const filterlayer:Array<humanData> = MainData.filter((item) => {
+      const filterlayer:Array<humanData> = HistoryData.filter((item) => {
         if(filters.length == 0) {
           return item
         }
@@ -93,6 +97,11 @@ const Main = () => {
               if(Number(item[fil.item]) < Number(fil.value)){
                 return fil
               }
+          }
+          if(fil.mode == 'category'){
+              if(fil.value.includes(item[fil.item])){
+                return fil
+              }            
           }          
         })
         if(maps.length == filters.length){
@@ -113,6 +122,9 @@ const Main = () => {
         }  else{
             return filterHumanData()
         }            
+    }
+    const getAllData = () => {
+        return HistoryData
     }
     useEffect(() => {
         if(mapRef.current){
@@ -135,7 +147,56 @@ const Main = () => {
         }
     })    
     const [filters,setFilters] = useState<Array<filterProps>>([])
- 
+    const riskPanels:Array<riskPanelType> =[
+        {
+            name:'Pregnancy',
+            key:'pregnancy'
+        },
+        {
+            name:'Hypertension',
+            key:'hypertension'
+        },
+        {
+            name:'CHF',
+            key:'CHF'
+        },
+        {
+            name:'COPD',
+            key:'COPD'
+        },
+        {
+            name:'Stroke',
+            key:'stroke'
+        },
+        {
+            name:'Mental Health',
+            key:'mentalHealth'
+        },
+        {
+            name:'Arrythmia',
+            key:'arrhythmia'
+        } ,
+        {
+            name:'Neurological',
+            key:'neurologicalDisorders'
+        },
+        {
+            name:'Diabetes',
+            key:'diabetes'
+        } ,
+        {
+            name:'Sleep Disorders',
+            key:'sleepDisorders'
+        },
+        {
+            name:'Chronic Pain',
+            key:'chronicPain'
+        },
+        {
+            name:'Obesity',
+            key:'obesity'
+        }                                                                                          
+    ]
     return (
         <>
             <div className="w-full">
@@ -150,8 +211,13 @@ const Main = () => {
                     <div className="flex flex-col justify-start">
                         <p className="font-medium mb-4">Risk Panel</p>
                         <div className="flex flex-row gap-2 justify-start items-center h-[156px]">
-                        <div className="font-medium flex flex-col gap-4 items-center h-full justify-center p-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">At Risk<p className="text-[#DC2626]">21</p></div>
-                        <div className="flex flex-col gap-2">
+                        <div className="font-medium flex flex-col min-w-[70px] gap-4 items-center h-full justify-center p-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">
+                            At Risk<p className="text-[#DC2626]">{getAllData().reduce((sum,el) => {
+                                return sum + riskPanels.filter((ris) => {
+                                    return el[ris.key] =='Risk'
+                                }).length
+                            },0)}</p></div>
+                        {/* <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-2 justify-start items-center">
                             <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
                                 <p className="font-medium	">Pregnancy</p>
@@ -242,6 +308,33 @@ const Main = () => {
                             </div>
                             </div>
 
+                        </div> */}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex flex-row flex-wrap gap-2 justify-start items-center">
+                               {riskPanels.map((item) => {
+                                    return (
+                                        <>
+                                            <div onClick={() => {
+                                                if(filters.filter((el) =>el.item == item.key).length>0){
+                                                   setFilters([...filters.filter((el) => el.item != item.key)])
+                                                }else{
+                                                   setFilters([...filters,{
+                                                    item:item.key,
+                                                    mode:'category',
+                                                    value:['Risk','Suspect']
+                                                   }])
+                                                }
+                                            }} className={`font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg ${filters.filter((el) =>el.item == item.key).length>0?'bg-[#48C3B529]':'bg-white'} cursor-pointer`}>
+                                                <p className="font-medium	">{item.name}</p>
+                                                <div className="flex flex-row justify-between items-center text-xs gap-5">
+                                                <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">{getAllData().filter((el) => el[item.key] == 'Suspect').length}</p></div>  
+                                                <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ">{getAllData().filter((el) => el[item.key] == 'Risk').length}</p></div>  
+                                                </div>
+                                            </div>                                
+                                        </>
+                                    )                                
+                               })}
+                            </div>
                         </div>
                         </div>
                     </div>
@@ -249,7 +342,7 @@ const Main = () => {
                 </div>                
                 <div className="w-full mt-5 flex justify-center">
                     <div className="w-full intro-y  ">
-                        <LeafletMap mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+                        <LeafletMap mode="City" mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
                     </div>
                 </div>             
                 <div className="w-full flex flex-col justify-center mt-[56px]">
@@ -257,7 +350,7 @@ const Main = () => {
                         <TrendsChart/>
                     </div>
                     <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
-                    <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>  
+                    <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>  
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
             </div>
