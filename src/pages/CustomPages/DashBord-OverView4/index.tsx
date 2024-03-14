@@ -12,6 +12,186 @@ import TrendsChart from "@/components/TrendsChart";
 import FilterBox from "@/components/FilterBox";
 import StandardTable from "@/components/Table/StandardTable";
 
+
+const data1 = [
+    {
+        
+      name: '180-200',
+      Normal: 36,
+      Suspected: 34,
+      AtRisk: 32,
+    },
+    {
+      name: '160-180',
+      Normal: 54,
+      Suspected: 50,
+      AtRisk: 45,
+    },
+    {
+      name: '140-160',
+      Normal: 20,
+      Suspected: 18,
+      AtRisk: 60,
+    },
+    {
+      name: '120-140',
+      Normal: 31,
+      Suspected: 7,
+      AtRisk: 4,
+    },
+    {
+      name: '100-120',
+      Normal: 84,
+      Suspected: 30,
+      AtRisk: 8,
+    },
+    {
+      name: '80-100',
+      Normal: 53,
+      Suspected: 7,
+      AtRisk: 49,
+    },
+    {
+      name: '60-80',
+      Normal: 19,
+      Suspected: 43,
+      AtRisk: 20,
+    },
+    {
+      name: '40-60',
+      Normal: 10,
+      Suspected: 53,
+      AtRisk: 59,
+    },
+];
+
+const data2 = [
+    {
+        name: '>=75',
+        Normal: 10,
+        Suspected: 52,
+        AtRisk: 60,
+      },
+      {
+        name: '45-75',
+        Normal: 20,
+        Suspected: 18,
+        AtRisk: 95,
+      },
+      {
+        name: '25-45',
+        Normal: 22,
+        Suspected: 23,
+        AtRisk: 34,
+      },
+      {
+        name: '18-25',
+        Normal: 36,
+        Suspected: 34,
+        AtRisk: 34,
+      },
+      {
+        name: '<=18',
+        Normal: 54,
+        Suspected: 6,
+        AtRisk: 59,
+    }
+];
+
+const data3 = [
+    {
+        name: '39-40',
+        Normal: 22,
+        Suspected: 23,
+        AtRisk: 34,
+      },
+      {
+        name: '38-39',
+        Normal: 20,
+        Suspected: 18,
+        AtRisk: 95,
+      },
+      {
+        name: '37-38',
+        Normal: 83,
+        Suspected: 31,
+        AtRisk: 7,
+      },
+      {
+        name: '36-37',
+        Normal: 52,
+        Suspected: 9,
+        AtRisk: 12,
+      },
+      {
+        name: '35-36',
+        Normal: 31,
+        Suspected: 23,
+        AtRisk: 64,
+      },
+      {
+        name: '34-35',
+        Normal: 10,
+        Suspected: 52,
+        AtRisk: 60,
+      },
+      {
+        name: '33-34',
+        Normal: 30,
+        Suspected: 8,
+        AtRisk: 4,
+      },
+      {
+        name: '32-33',
+        Normal: 54,
+        Suspected: 6,
+        AtRisk: 59,
+      },
+      {
+        name: '31-32',
+        Normal: 19,
+        Suspected: 45,
+        AtRisk: 20,
+      },
+      {
+        name: '30-31',
+        Normal: 36,
+        Suspected: 34,
+        AtRisk: 34,
+      }
+  ];
+const data4 = [
+    {
+        name: '>=40',
+        Normal: 22,
+        Suspected: 23,
+        AtRisk: 34,
+      },
+      {
+        name: '30-40',
+        Normal: 20,
+        Suspected: 18,
+        AtRisk: 95,
+      },
+      {
+        name: '20-30',
+        Normal: 10,
+        Suspected: 52,
+        AtRisk: 60,
+      },
+      {
+        name: '10-20',
+        Normal: 54,
+        Suspected: 6,
+        AtRisk: 59,
+      },
+      {
+        name: '<=10',
+        Normal: 36,
+        Suspected: 34,
+        AtRisk: 34,
+    }
+];
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
     const boundsFilter = useRef({
@@ -25,6 +205,7 @@ const Main = () => {
             return {
                 "id":item[1][0].id,
                 "name": item[1][0].city,
+                "membersLength":item[1].length,  
                 "riskLevel": item[1].map(el =>el.riskLevel).sort((a,b) => item[1].filter((el) =>el.riskLevel == a).length - item[1].filter((el) =>el.riskLevel == b).length).pop() as string,
                 "heartRate": item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length,
                 "DBPbloodPressure": item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length,
@@ -35,27 +216,29 @@ const Main = () => {
                 "latitude": item[1][0].latitude,
                 "longitude": item[1][0].longitude,
                 "city": item[1][0].city,        
-                "membersLength":item[1].length  
             }
         })
     }
     const filterdDataWithBounds = () => {
         const result = _.groupBy(filterHumanData(),'city')
         let resolve =Object.entries(result).map((item) => {
+            const sbp =  (item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length).toFixed(0)
+            const dbp = (item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length).toFixed(0)
             return {
                 "id":item[1][0].id,
                 "name": item[1][0].city,
+                "membersLength":item[1].length,  
                 "riskLevel": item[1].map(el =>el.riskLevel).sort((a,b) => item[1].filter((el) =>el.riskLevel == a).length - item[1].filter((el) =>el.riskLevel == b).length).pop() as string,
-                "heartRate": item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length,
-                "DBPbloodPressure": item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length,
-                "SBPbloodPressure": item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length,
-                "temperature": item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length,
-                "respirationRate": item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length,
-                "spo2": item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length,
+                "heartRate": (item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length).toFixed(2),
+                "DBPbloodPressure":dbp ,
+                "SBPbloodPressure": sbp,
+                "temperature": (item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length).toFixed(2),
+                "respirationRate": (item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length).toFixed(2),
+                "spo2": (item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length).toFixed(2),
                 "latitude": item[1][0].latitude,
                 "longitude": item[1][0].longitude,
-                "city": item[1][0].city,        
-                "membersLength":item[1].length  
+                "city": item[1][0].city,     
+                "bloodPressure": sbp +'/'+dbp  
             }
         })
         if(boundsFilter){
@@ -151,23 +334,25 @@ const Main = () => {
                     {/* <div className="w-full -ms-4">
                         <TrendsChart/>
                     </div> */}
-                    <div className="title mb-6 font-medium">Overview</div>
+                    <div className="mb-6 mt-6 flex justify-between items-center">
+                        <div className="title  text-lg font-medium">Overview</div>
+                    </div>   
                     <div className="grid lg:grid-cols-2 grid-flow-row gap-4 ">
                     <div className="border rounded-lg p-6 bg-white">
                         Heart Rate
-                        <MixBarChart/>
+                        <MixBarChart data={data1}/>
                     </div>
                     <div className="border rounded-lg p-6 bg-white">
                         Blood Pressure
-                        <MixBarChart/>
+                        <MixBarChart data={data2}/>
                     </div>
                     <div className="border rounded-lg p-6 bg-white">
                         Temperature Rate
-                        <MixBarChart/>
+                        <MixBarChart data={data3}/>
                     </div>
                     <div className="border rounded-lg p-6 bg-white">
                         Respiration Rate
-                        <MixBarChart/>
+                        <MixBarChart data={data4}/>
                     </div>
                     </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 mt-4 mb-[40px]">
@@ -243,11 +428,16 @@ const Main = () => {
                         </div>
                     </div>         
                     </div>  
-                    <Table applyFilters={filterdDataWithBounds} filterBox={filters}></Table>  
+                    {/* <Table applyFilters={filterdDataWithBounds} filterBox={filters}></Table>   */}
+                    <div>
+                        <div className="mb-6 mt-6 flex justify-between items-center">
+                            <div className="title  text-lg font-medium">City List</div>
+                        </div>                        
+                        <StandardTable filterBox={filters} mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
+                    </div>
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
-                    {/* <StandardTable mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
-                    <StandardTable mode="member" applyFilters={filterHumanDataWithBounds}></StandardTable> */}
+                    {/* <StandardTable mode="member" applyFilters={filterHumanDataWithBounds}></StandardTable> */}
             </div>
         </>
     )

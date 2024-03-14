@@ -12,6 +12,7 @@ import { LatLng } from "leaflet";
 import TrendsChart from "@/components/TrendsChart";
 import FilterBox from "@/components/FilterBox";
 import ChartAndTableShowProps from '@/components/chartAndTableShow'
+import StandardTable from "@/components/Table/StandardTable";
 type riskPanelType = {
     name:string,
     key:keyof humanData
@@ -49,20 +50,23 @@ const Main = () => {
     const filterdDataWithBounds = () => {
         const result = _.groupBy(filterHumanData(),'city')
         let resolve =Object.entries(result).map((item) => {
+            const sbp =  (item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length).toFixed(0)
+            const dbp = (item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length).toFixed(0)
             return {
                 "id":item[1][0].id,
                 "name": item[1][0].city,
+                "membersLength":item[1].length,  
                 "riskLevel": item[1].map(el =>el.riskLevel).sort((a,b) => item[1].filter((el) =>el.riskLevel == a).length - item[1].filter((el) =>el.riskLevel == b).length).pop() as string,
-                "heartRate": item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length,
-                "DBPbloodPressure": item[1].reduce((sum,{DBPbloodPressure}) =>sum+Number(DBPbloodPressure),0)/ item[1].length,
-                "SBPbloodPressure": item[1].reduce((sum,{SBPbloodPressure}) =>sum+Number(SBPbloodPressure),0)/ item[1].length,
-                "temperature": item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length,
-                "respirationRate": item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length,
-                "spo2": item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length,
+                "heartRate": (item[1].reduce((sum,{heartRate}) =>sum+Number(heartRate),0)/ item[1].length).toFixed(2),
+                "DBPbloodPressure":dbp ,
+                "SBPbloodPressure": sbp,
+                "temperature": (item[1].reduce((sum,{temperature}) =>sum+Number(temperature),0)/ item[1].length).toFixed(2),
+                "respirationRate": (item[1].reduce((sum,{respirationRate}) =>sum+Number(respirationRate),0)/ item[1].length).toFixed(2),
+                "spo2": (item[1].reduce((sum,{spo2}) =>sum+Number(spo2),0) / item[1].length).toFixed(2),
                 "latitude": item[1][0].latitude,
                 "longitude": item[1][0].longitude,
-                "city": item[1][0].city,        
-                "membersLength":item[1].length  
+                "city": item[1][0].city,     
+                "bloodPressure": sbp +'/'+dbp  
             }
         })
         if(boundsFilter){
@@ -139,7 +143,7 @@ const Main = () => {
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
             publish('mapChange',{})
         })    
-        mapRef.current.map.addEventListener('load',() => {
+        mapRef.current.map.addEventListener('update',() => {
             boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
             publish('mapChange',{})
@@ -323,6 +327,7 @@ const Main = () => {
                                                     mode:'category',
                                                     value:['Risk','Suspect']
                                                    }])
+                                                   
                                                 }
                                             }} className={`font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg ${filters.filter((el) =>el.item == item.key).length>0?'bg-[#48C3B529]':'bg-white'} cursor-pointer`}>
                                                 <p className="font-medium	">{item.name}</p>
@@ -350,7 +355,11 @@ const Main = () => {
                         <TrendsChart/>
                     </div>
                     <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
-                    <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>  
+                    {/* <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>   */}
+                    <div className="mb-6 mt-6 flex justify-between items-center">
+                        <div className="title  text-lg font-medium">City List</div>
+                    </div>
+                    <StandardTable filterBox={filters} mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
                     {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
                 </div>                   
             </div>

@@ -221,7 +221,7 @@ function Main(props: MainProps) {
             <div class="p-2 w-full">
               <div class="flex w-full items-center justify-between">
                 <div class="text-[12px] text-[#475569]">
-                  Number of Members <span class="text-[#374151] opacity-50 text-[10px] ">(AVG)</span>
+                  Number of Members
                 </div>
                 <div class="text-[12px] text-gray-800">
                   ${markerElem?.membersLength}

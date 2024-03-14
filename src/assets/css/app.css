@@ -43,3 +43,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.MuiDataGrid-root {
+    border: none;
+}

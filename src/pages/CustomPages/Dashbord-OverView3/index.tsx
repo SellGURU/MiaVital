@@ -133,19 +133,19 @@ function Main() {
         <div className="grid grid-cols-2 grid-flow-row gap-4 ">
           <div className="border rounded-lg p-6 bg-white">
             Heart Rate
-            <MixBarChart/>
+            <MixBarChart data={[]}/>
           </div>
           <div className="border rounded-lg p-6 bg-white">
             Blood Pressure
-            <MixBarChart/>
+            <MixBarChart data={[]}/>
           </div>
           <div className="border rounded-lg p-6 bg-white">
             Temperature Rate
-            <MixBarChart/>
+            <MixBarChart data={[]}/>
           </div>
           <div className="border rounded-lg p-6 bg-white">
             Respiration Rate
-            <MixBarChart/>
+            <MixBarChart data={[]}/>
           </div>
         </div>
         <div className="grid grid-cols-3 grid-flow-row gap-4 mt-4 mb-[40px]">

@@ -68,6 +68,7 @@ type CityData = {
   latitude:string
   longitude:string
   membersLength:number
+  bloodPressure?:string
 }
 
 type humanData = {

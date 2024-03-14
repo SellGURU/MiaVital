@@ -2,6 +2,7 @@ import { useState } from "react"
 import MixBarChart from "../MixBarChart"
 import PieChartData from "../PieChartData"
 import HumanTable from '@/components/Table/HumanTable'
+import StandardTable from "../Table/StandardTable"
 
 interface ChartAndTableShowProps {
     filterHumanDataWithBounds:() => Array<humanData>
@@ -206,7 +207,7 @@ const data4: DataArray = [
     return (
         <>
             <div className="mb-6 mt-6 flex justify-between items-center">
-                <div className="title  text-lg font-medium">Overview</div>
+                <div className="title  text-lg font-medium">{showModeData=='Graph' ? 'Overview':'Member List'} </div>
                 <div>
                     <div className="border flex items-center justify-between px-2 border-[#E2E8F0] w-[222px] h-12 rounded-[5px]">
                         <div onClick={(() => setShowModeData('List'))} className={` ${showModeData == 'List' ?'text-white' :'#30445B'}  ${showModeData == 'List' ?'opacity-100' :'opacity-50'}text-sm ${showModeData == 'List' ?'bg-[#48C3B5] ' :''} flex items-center cursor-pointer rounded-[5px] h-8 px-4`}>List View</div>
@@ -337,7 +338,8 @@ const data4: DataArray = [
                 </>
             :
             <div>
-                <HumanTable applyFilters={filterHumanDataWithBounds} filterBox={filters}></HumanTable>                
+                {/* <HumanTable applyFilters={filterHumanDataWithBounds} filterBox={filters}></HumanTable>                 */}
+                 <StandardTable filterBox={filters} mode="member" applyFilters={filterHumanDataWithBounds}></StandardTable>
             </div>
             }
         </>
