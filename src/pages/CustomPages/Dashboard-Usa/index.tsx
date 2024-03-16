@@ -214,14 +214,78 @@ const Main = () => {
                     </div>
                     <div className="flex flex-col justify-start">
                         <p className="font-medium mb-4">Risk Panel</p>
-                        <div className="flex flex-row gap-2 justify-start items-center h-[156px]">
-                        <div className="font-medium flex flex-col min-w-[70px] gap-4 items-center h-full justify-center p-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">
-                            At Risk<p className="text-[#DC2626]">{getAllData().reduce((sum,el) => {
-                                return sum + riskPanels.filter((ris) => {
-                                    return el[ris.key] =='Risk'
-                                }).length
-                            },0)}</p></div>
-                        {/* <div className="flex flex-col gap-2">
+                        <div className="flex flex-row flex-nowrap gap-2 justify-start items-center h-[156px] w-full">
+                            <div className="font-medium flex flex-col min-w-[70px] gap-4 items-center h-full justify-center p-2 border border-[#E2E8F0] rounded-lg bg-white cursor-pointer">
+                                At Risk
+                                <p className="text-[#DC2626]">{getAllData().reduce((sum,el) => {
+                                    return sum + riskPanels.filter((ris) => {
+                                        return el[ris.key] =='Risk'
+                                    }).length
+                                },0)}
+                                </p>
+                            </div>
+                        
+                            <div className="grid grid-rows-2 grid-flow-col gap-2 overflow-x-auto">
+                                {/* <div className="flex flex-row flex-wrap overflow-x-scroll lg:overflow-x-hidden gap-2 justify-start items-center"> */}
+                                    {riskPanels.map((item) => {
+                                        return (
+                                            <>
+                                                <div onClick={() => {
+                                                    if(filters.filter((el) =>el.item == item.key).length>0){
+                                                    setFilters([...filters.filter((el) => el.item != item.key)])
+                                                    }else{
+                                                    setFilters([...filters,{
+                                                        item:item.key,
+                                                        mode:'category',
+                                                        value:['Risk','Suspect']
+                                                    }])
+                                                    
+                                                    }
+                                                }} className={`font-normal text-xs flex flex-nowrap flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg ${filters.filter((el) =>el.item == item.key).length>0?'bg-[#48C3B529]':'bg-white'} cursor-pointer`}>
+                                                    <p className="font-medium text-base">{item.name}</p>
+                                                    <div className="flex flex-row justify-between items-center text-xs gap-5">
+                                                    <div className="flex flex-row gap-2 text-nowrap">Suspected<p className="text-[#FACC15]">{getAllData().filter((el) => el[item.key] == 'Suspect').length}</p></div>  
+                                                    <div className="flex flex-row gap-2 text-nowrap">At Risk<p className="text-[#DC2626] ">{getAllData().filter((el) => el[item.key] == 'Risk').length}</p></div>  
+                                                    </div>
+                                                </div>                                
+                                            </>
+                                        )                                
+                                    })}
+                                {/* </div> */}
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>                
+                <div className="w-full mt-5 flex justify-center">
+                    <div className="w-full intro-y  ">
+                        <LeafletMap mode="City" mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+                    </div>
+                </div>             
+                <div className="w-full flex flex-col justify-center mt-[56px]">
+                    <div className="w-full">
+                        <TrendsChart/>
+                    </div>
+                    <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
+                    {/* <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>   */}
+                    <div className="mb-6 mt-6 flex justify-between items-center">
+                        <div className="title  text-lg font-medium">City List</div>
+                    </div>
+                    <StandardTable filterBox={filters} mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
+                    {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
+                </div>                   
+            </div>
+        </>
+    )
+}
+
+export default Main
+
+
+
+
+
+{/* <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-2 justify-start items-center">
                             <div className="font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg bg-white cursor-pointer">
                                 <p className="font-medium	">Pregnancy</p>
@@ -313,58 +377,3 @@ const Main = () => {
                             </div>
 
                         </div> */}
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-row flex-wrap gap-2 justify-start items-center">
-                               {riskPanels.map((item) => {
-                                    return (
-                                        <>
-                                            <div onClick={() => {
-                                                if(filters.filter((el) =>el.item == item.key).length>0){
-                                                   setFilters([...filters.filter((el) => el.item != item.key)])
-                                                }else{
-                                                   setFilters([...filters,{
-                                                    item:item.key,
-                                                    mode:'category',
-                                                    value:['Risk','Suspect']
-                                                   }])
-                                                   
-                                                }
-                                            }} className={`font-medium flex flex-1 flex-col gap-2 items-center p-2 border border-[#E2E8F0] px-[10px] py-[13px] rounded-lg ${filters.filter((el) =>el.item == item.key).length>0?'bg-[#48C3B529]':'bg-white'} cursor-pointer`}>
-                                                <p className="font-medium	">{item.name}</p>
-                                                <div className="flex flex-row justify-between items-center text-xs gap-5">
-                                                <div className="flex flex-row gap-2">Suspected<p className="text-[#FACC15]">{getAllData().filter((el) => el[item.key] == 'Suspect').length}</p></div>  
-                                                <div className="flex flex-row gap-2">At Risk<p className="text-[#DC2626] ">{getAllData().filter((el) => el[item.key] == 'Risk').length}</p></div>  
-                                                </div>
-                                            </div>                                
-                                        </>
-                                    )                                
-                               })}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                
-                </div>                
-                <div className="w-full mt-5 flex justify-center">
-                    <div className="w-full intro-y  ">
-                        <LeafletMap mode="City" mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
-                    </div>
-                </div>             
-                <div className="w-full flex flex-col justify-center mt-[56px]">
-                    <div className="w-full">
-                        <TrendsChart/>
-                    </div>
-                    <ChartAndTableShowProps filters={filters} filterHumanDataWithBounds={filterHumanDataWithBounds}></ChartAndTableShowProps>
-                    {/* <Table filterBox={filters} applyFilters={filterdDataWithBounds} ></Table>   */}
-                    <div className="mb-6 mt-6 flex justify-between items-center">
-                        <div className="title  text-lg font-medium">City List</div>
-                    </div>
-                    <StandardTable filterBox={filters} mode="city" applyFilters={filterdDataWithBounds}></StandardTable>
-                    {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
-                </div>                   
-            </div>
-        </>
-    )
-}
-
-export default Main
