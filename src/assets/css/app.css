@@ -48,3 +48,14 @@
 .MuiDataGrid-root {
     border: none;
 }
+
+/* ScrollBar */
+.hiddenScrollBar::-webkit-scrollbar {
+    height:7px;
+}
+/*ScrollBar Handle */
+.hiddenScrollBar::-webkit-scrollbar-thumb {
+border-radius: 10px;
+cursor: pointer;
+background: lightgray; 
+}
