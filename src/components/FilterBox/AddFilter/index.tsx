@@ -206,7 +206,7 @@ const AddFilter:React.FC<AddFilterProps> = ({filters,setFilters}) => {
                     </div>
                 </div>
             :
-                <div onClick={() => {setOpenFilter(true)}} className="bg-white cursor-pointer border w-auto flex items-center px-3 py-2 rounded-[10px] border-[#E2E8F0]">
+                <div onClick={() => {setOpenFilter(true)}} className="bg-white cursor-pointer h-10 border w-auto flex items-center px-3 py-2 rounded-[10px] border-[#E2E8F0]">
                     <img src="./filter.svg" alt="" />
                     <div className="text-xs text-[#475569] font-normal ml-1 mr-1">Add Filter</div>
                 </div>               

@@ -29,7 +29,7 @@ function Main(props: { layout?: "side-menu" | "simple-menu" | "top-menu" }) {
           "after:content-[''] after:absolute after:inset-0 after:h-[65px] after:mx-3 after:bg-primary after:mt-5 after:rounded-xl after:shadow-md after:hidden after:md:block after:dark:bg-darkmode-600",
         ])}
       >
-        <div className="flex items-center h-full">
+        <div className="flex items-center h-full px-3">
           {/* BEGIN: Logo */}
           <Link
             to="/"

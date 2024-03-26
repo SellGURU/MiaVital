@@ -225,7 +225,7 @@ const Main = () => {
                                 </p>
                             </div>
                         
-                            <div className="grid grid-rows-2 grid-flow-col gap-2 overflow-x-auto">
+                            <div className="grid grid-rows-2 grid-flow-col gap-2 h-full overflow-x-auto hiddenScrollBar">
                                 {/* <div className="flex flex-row flex-wrap overflow-x-scroll lg:overflow-x-hidden gap-2 justify-start items-center"> */}
                                     {riskPanels.map((item) => {
                                         return (
