@@ -17,6 +17,7 @@ type boundsFiltertype = {
   applyFilters:() => Array<any>
   mapRef:React.MutableRefObject<any>
   mode?:'City'|'Member'
+  center?:[number,number]
 }
 
 type MainProps = React.ComponentPropsWithoutRef<"div"> & boundsFiltertype;
@@ -40,8 +41,8 @@ function Main(props: MainProps) {
     console.log()
     const mapInstance =await initializeMap({
       config: {
-        center:[12.97194, 77.59369],
-        zoom: 9,
+        center:props.center?props.center:[12.97194, 77.59369],
+        zoom: props.center?7:9,
       },
     });
 

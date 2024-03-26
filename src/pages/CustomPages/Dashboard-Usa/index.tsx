@@ -2,7 +2,7 @@ import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-l
 import LeafletMap from "@/components/LeafletMap"
 import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import MainData from '@/assets/json/main.json';
-import HistoryData from '@/assets/json/history.json';
+import HistoryData from '@/assets/json/usa.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
 import Table from "@/components/Table";
@@ -259,7 +259,7 @@ const Main = () => {
                 </div>                
                 <div className="w-full mt-5 flex justify-center">
                     <div className="w-full intro-y  ">
-                        <LeafletMap mode="City" mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
+                        <LeafletMap center={[32.1574,-82.9071]} mode="City" mapRef={mapRef} applyFilters={filterdData} className="h-[410px] mt-5 rounded-md bg-slate-200" />
                     </div>
                 </div>             
                 <div className="w-full flex flex-col justify-center mt-[56px]">
