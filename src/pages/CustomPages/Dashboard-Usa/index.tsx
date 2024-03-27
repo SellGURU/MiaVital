@@ -1,8 +1,7 @@
 import { LeafletElement } from "@/components/Base/LeafletMapLoader/leaflet-map-loader";
 import LeafletMap from "@/components/LeafletMap"
 import { createRef, useEffect, useMemo, useRef, useState } from "react";
-import MainData from '@/assets/json/main.json';
-import HistoryData from '@/assets/json/usa.json';
+import usaData from '@/assets/json/usa.json';
 import _ from "lodash";
 import MixBarChart from "@/components/MixBarChart";
 import Table from "@/components/Table";
@@ -82,7 +81,7 @@ const Main = () => {
         }        
     }    
     const filterHumanData =() => {
-      const filterlayer:Array<humanData> = HistoryData.filter((item) => {
+      const filterlayer:Array<humanData> = usaData.filter((item) => {
         if(filters.length == 0) {
           return item
         }
@@ -103,7 +102,7 @@ const Main = () => {
               }
           }
           if(fil.mode == 'category'){
-              if(fil.value.includes(item[fil.item])){
+              if(fil.value.toString().includes(item[fil.item].toString())){
                 return fil
               }            
           }          
@@ -111,7 +110,7 @@ const Main = () => {
         if(maps.length == filters.length){
           return item
         }
-      }) as Array<humanData>       
+      }) as any      
       return filterlayer
     }
     const filterHumanDataWithBounds = () => {
@@ -128,7 +127,7 @@ const Main = () => {
         }            
     }
     const getAllData = () => {
-        return HistoryData
+        return usaData
     }
     useEffect(() => {
         if(mapRef.current){
