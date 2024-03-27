@@ -399,7 +399,7 @@ const Main = () => {
       if (maps.length == filters.length) {
         return item;
       }
-    }) as Array<humanData>;
+    }) as any;
     return filterlayer;
   };
   const filterHumanDataWithBounds = () => {
@@ -631,7 +631,7 @@ const Main = () => {
             filters={filters}
             filterHumanDataWithBounds={filterHumanDataWithBounds}
           ></ChartAndTableShowProps>
-          <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table>
+          {/* <Table applyFilters={filterdDataWithBounds} filterBox={[]}></Table> */}
           {/* <EnhancedTable filterBox={filters} applyFilters={filterdItems} ></EnhancedTable> */}
         </div>
       </div>
