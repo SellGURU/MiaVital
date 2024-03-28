@@ -19,8 +19,8 @@ type riskPanelType = {
 const Main = () => {
     const mapRef = createRef<LeafletElement>();
     const boundsFilter = useRef({
-        northE:new LatLng(13.520508153934646,79.26361083984376),
-        southW: new LatLng(12.42316552500995,75.92651367187501)        
+        northE:new LatLng(34.02534773814796,-76.21216182075199),
+        southW: new LatLng(30.21160822381693,-89.56055049262699)        
     })
     
     const filterdData = () => {           
@@ -110,7 +110,7 @@ const Main = () => {
         if(maps.length == filters.length){
           return item
         }
-      }) as any      
+      }) as Array<humanData>    
       return filterlayer
     }
     const filterHumanDataWithBounds = () => {
@@ -133,6 +133,7 @@ const Main = () => {
         if(mapRef.current){
             // console.log(mapRef.current?.map.getBounds())
         mapRef.current.map.addEventListener('mouseup',() => {
+            console.log(mapRef.current?.map.getBounds())
             boundsFilter.current.northE = mapRef.current?.map.getBounds().getNorthEast()  as LatLng
             boundsFilter.current.southW = mapRef.current?.map.getBounds().getSouthWest()  as LatLng
             publish('mapChange',{})

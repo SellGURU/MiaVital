@@ -72,7 +72,7 @@ type CityData = {
 }
 
 type humanData = {
-  id:number
+  id:string
   name:string
   spo2:string
   age:string
